@@ -43,6 +43,14 @@ export default {
   }
 };
 </script>
+<style lang="scss">
+.todo{
+  width: 80%;
+  height: 100vh;  
+  margin: 0 auto;
+  border: 1px solid #eee;
+}  
+</style>
 
 
 
