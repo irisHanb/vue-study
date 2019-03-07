@@ -1,12 +1,11 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <Todo></Todo>
   </div>
 </template>
 <script>
 import Todo from "@/components/todo/Todo";
-import './assets/scss/style.scss';
-
+import "./assets/scss/style.scss";
 
 export default {
   components: { Todo }
@@ -14,5 +13,4 @@ export default {
 </script>
 
 <style lang="scss">
-
 </style>

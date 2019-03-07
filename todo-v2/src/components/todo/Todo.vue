@@ -1,5 +1,6 @@
 <template>
   <div class="todo">
+    <h2>ToDo</h2>
     <TodoInput></TodoInput>
     <TodoList :list="list"></TodoList>
   </div>
@@ -9,26 +10,37 @@ import TodoInput from "@/components/todo/TodoInput";
 import TodoList from "@/components/todo/TodoList";
 
 import { eventBus } from "@/main";
+import { constants } from "fs";
 
 export default {
   data() {
     return {
-      cnt: 0,
-      list: []
+      cnt: null,
+      list: null,
+      listBase: [
+        { text: "study: vue", id: 1 },
+        { text: "study: react", id: 2 },
+        { text: "study: ui", id: 3 }
+      ]
     };
   },
   components: { TodoInput, TodoList },
   created() {
     eventBus.$on("addTodo", this.addTodo);
     eventBus.$on("removeTodo", this.removeTodo);
-
-    this.list = JSON.parse(localStorage.list) || [];
-    this.cnt = localStorage.cnt || 0;
+    // check exist todo list
+    const dbList = JSON.parse(localStorage.list);
+    if (dbList && dbList.length != 0) {
+      this.list = [...dbList];
+    } else {
+      this.list = [...this.listBase];
+    }
+    this.cnt = this.list.length + 1;
   },
   methods: {
     addTodo(todoText) {
-      this.cnt++;
       this.list.push({ text: todoText, id: this.cnt });
+      this.cnt++;
       this.saveList();
     },
     removeTodo(id) {
@@ -44,12 +56,22 @@ export default {
 };
 </script>
 <style lang="scss">
-.todo{
-  width: 80%;
-  height: 100vh;  
+.todo {
+  max-width: 60%;
+  min-width: 500px;
   margin: 0 auto;
-  border: 1px solid #eee;
-}  
+  padding: 1.5em;
+  background: #fff9db;
+  h2 {
+    padding: 1em;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  div {
+    // outline: 1px dotted red;
+  }
+}
 </style>
 
 

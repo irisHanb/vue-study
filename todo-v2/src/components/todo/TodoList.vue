@@ -1,5 +1,5 @@
 <template>
-  <div class>
+  <div class="todo-list">
     <ul>
       <Item v-for="(item, idx) in list" :item="item" :key="idx+1"></Item>
     </ul>
@@ -12,4 +12,10 @@ export default {
   components: { Item }
 };
 </script>
+<style lang="scss" scoped>
+.todo-list {
+  margin-top: 1.5em;
+}
+</style>
+
 
