@@ -8,40 +8,35 @@
 <script>
 import TodoInput from "@/components/todo/TodoInput";
 import TodoList from "@/components/todo/TodoList";
+import { mapState } from "vuex";
+
+// import store from "@/store";
 
 import { eventBus } from "@/main";
 import { constants } from "fs";
 
+// import { store } from "vue";
+
 export default {
+  computed: {
+    ...mapState(["list"])
+  },
   data() {
-    return {
-      cnt: null,
-      list: null,
-      listBase: [
-        { text: "study: vue", id: 1 },
-        { text: "study: react", id: 2 },
-        { text: "study: ui", id: 3 }
-      ]
-    };
+    return {};
   },
   components: { TodoInput, TodoList },
   created() {
     eventBus.$on("addTodo", this.addTodo);
     eventBus.$on("removeTodo", this.removeTodo);
-    // check exist todo list
-    const dbList = JSON.parse(localStorage.list);
-    if (dbList && dbList.length != 0) {
-      this.list = [...dbList];
-    } else {
-      this.list = [...this.listBase];
-    }
-    this.cnt = this.list.length + 1;
+    this.$store.commit("getList");
   },
   methods: {
     addTodo(todoText) {
-      this.list.push({ text: todoText, id: this.cnt });
-      this.cnt++;
-      this.saveList();
+      this.$store.dispatch("addTodo", todoText);
+
+      // this.list.push({ text: todoText, id: this.cnt });
+      // this.cnt++;
+      // this.saveList();
     },
     removeTodo(id) {
       this.list = this.list.filter(ele => id != ele.id);
