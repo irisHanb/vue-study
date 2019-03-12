@@ -2,58 +2,28 @@
   <div class="todo">
     <h2>ToDo</h2>
     <TodoInput></TodoInput>
-    <TodoList :list="list"></TodoList>
+    <TodoList></TodoList>
   </div>
 </template>
 <script>
-import TodoInput from "@/components/todo/TodoInput";
-import TodoList from "@/components/todo/TodoList";
-import { mapState } from "vuex";
-
-// import store from "@/store";
-
-import { eventBus } from "@/main";
-import { constants } from "fs";
-
-// import { store } from "vue";
+import TodoInput from '@/components/todo/TodoInput'
+import TodoList from '@/components/todo/TodoList'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  computed: {
-    ...mapState(["list"])
-  },
+  computed: {},
   data() {
-    return {};
+    return {}
   },
   components: { TodoInput, TodoList },
-  created() {
-    eventBus.$on("addTodo", this.addTodo);
-    eventBus.$on("removeTodo", this.removeTodo);
-    this.$store.commit("getList");
-  },
-  methods: {
-    addTodo(todoText) {
-      this.$store.dispatch("addTodo", todoText);
-
-      // this.list.push({ text: todoText, id: this.cnt });
-      // this.cnt++;
-      // this.saveList();
-    },
-    removeTodo(id) {
-      this.list = this.list.filter(ele => id != ele.id);
-      this.saveList();
-    },
-    saveList() {
-      localStorage.list = JSON.stringify(this.list);
-      localStorage.cnt = this.cnt;
-      // console.log("addTodo>", localStorage.list);
-    }
-  }
-};
+  created() {},
+  methods: {}
+}
 </script>
 <style lang="scss">
 .todo {
-  max-width: 60%;
-  min-width: 500px;
+  max-width: 80%;
+  min-width: 700px;
   margin: 0 auto;
   padding: 1.5em;
   background: #fff9db;

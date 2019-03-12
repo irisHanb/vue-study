@@ -5,32 +5,37 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    cnt: null,
-    list: null,
-    listBase: [
-      { text: 'study: vue', id: 1 },
-      { text: 'study: react', id: 2 },
-      { text: 'study: ui', id: 3 }
-    ],
-
-    count: 0
+    todos: [],
+    id: 0
   },
-  mutations: {
-    increment(state) {
-      state.count++
+  getters: {
+    todosOn(state) {
+      return state.todos.filter(ele => !ele.done)
     },
-    getList() {
-      const dbList = JSON.parse(localStorage.list)
-      if (dbList && dbList.length != 0) {
-        state.list = [...dbList]
-      } else {
-        state.list = [...state.listBase]
-      }
-      state.cnt = state.list.length + 1
+    todosDone(state) {
+      return state.todos.filter(ele => ele.done)
     }
   },
-  actions: {
-    addTodo() {},
-    delTodo() {}
-  }
+  mutations: {
+    addTodo(state, payload) {
+      state.id++
+      const info = {
+        text: payload.text,
+        id: state.id,
+        done: false,
+        onEdit: false
+      }
+      state.todos.push(info)
+      this.commit('setLocal')
+    },
+    removeTodo(state, { todoId }) {
+      state.todos = state.todos.filter(el => el.id != todoId)
+      this.commit('setLocal')
+    },
+    setLocal(state) {
+      localStorage.todos = JSON.stringify(state.todos)
+      localStorage.id = state.id
+    }
+  },
+  actions: {}
 })
