@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todos: [],
-    id: 0
+    todos: JSON.parse(localStorage.todos).list
+      ? JSON.parse(localStorage.todos).list
+      : [],
+    id: JSON.parse(localStorage.todos).id
+      ? JSON.parse(localStorage.todos).id
+      : 0
   },
   getters: {
     todosOn(state) {
@@ -32,9 +36,15 @@ export default new Vuex.Store({
       state.todos = state.todos.filter(el => el.id != todoId)
       this.commit('setLocal')
     },
+    dragDoneTodo(state, { id, isDone }) {
+      state.todos = state.todos.map(ele => {
+        if (ele.id == id) ele.done = isDone
+        return ele
+      })
+    },
     setLocal(state) {
-      localStorage.todos = JSON.stringify(state.todos)
-      localStorage.id = state.id
+      const obj = { list: [...state.todos], id: state.id }
+      localStorage.todos = JSON.stringify(obj)
     }
   },
   actions: {}

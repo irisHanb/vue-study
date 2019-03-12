@@ -1,27 +1,37 @@
 <template>
-  <div class="todo">
+  <div class="todos">
     <h2>ToDo</h2>
     <TodoInput></TodoInput>
-    <TodoList></TodoList>
+    <div class="todos-wrap">
+      <TodoList :title="`Have to do`" :list="todosOn" :isDone="false"></TodoList>
+      <TodoList :title="`Done`" :list="todosDone" :isDone="true"></TodoList>
+    </div>
   </div>
 </template>
 <script>
 import TodoInput from '@/components/todo/TodoInput'
 import TodoList from '@/components/todo/TodoList'
-import { mapState, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations } from 'vuex'
 
 export default {
-  computed: {},
   data() {
     return {}
   },
+  computed: {
+    ...mapState(['todos']),
+    ...mapGetters({
+      todosDone: 'todosDone',
+      todosOn: 'todosOn'
+    })
+  },
+
   components: { TodoInput, TodoList },
   created() {},
   methods: {}
 }
 </script>
 <style lang="scss">
-.todo {
+.todos {
   max-width: 80%;
   min-width: 700px;
   margin: 0 auto;
@@ -33,8 +43,8 @@ export default {
     font-size: 2rem;
     font-weight: bold;
   }
-  div {
-    // outline: 1px dotted red;
+  &-wrap {
+    display: flex;
   }
 }
 </style>

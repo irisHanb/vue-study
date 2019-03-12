@@ -1,5 +1,5 @@
 <template>
-  <li class="todo-item" draggable="true">
+  <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
     <input type="checkbox" v-model="item.done">
     <input
       type="text"
@@ -40,7 +40,12 @@ export default {
     },
     editDone() {
       this.item.onEdit = false
-    }
+    },
+    //--- done: true, false 간 이동
+    dragStart(e) {
+      e.dataTransfer.setData('text/plain', e.target.id)
+    },
+    dragEnd(e) {}
   }
 }
 </script>
