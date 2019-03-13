@@ -7,6 +7,8 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data() {
     return {
@@ -16,12 +18,13 @@ export default {
   created() {},
 
   methods: {
+    ...mapActions('todos', ['addTodo']),
     addTodo() {
       if (!this.todoText) {
         alert('할일을 입력해 주세요~')
         return
       }
-      this.$store.commit('todos/addTodo', { text: this.todoText })
+      this.$store.dispatch('todos/addTodo', { text: this.todoText })
       this.todoText = null
     }
   }

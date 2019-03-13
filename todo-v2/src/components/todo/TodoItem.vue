@@ -23,6 +23,7 @@
   </li>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: ['item'],
   data() {
@@ -33,7 +34,7 @@ export default {
   created() {},
   methods: {
     removeTodo() {
-      this.$store.commit('todos/removeTodo', { todoId: this.item.id })
+      this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
     },
     editTodo() {
       this.item.onEdit = true
