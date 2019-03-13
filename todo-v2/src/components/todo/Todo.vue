@@ -26,7 +26,9 @@ export default {
   },
 
   components: { TodoInput, TodoList },
-  created() {},
+  created() {
+    console.log( localStorage.todos);
+  },
   methods: {}
 }
 </script>

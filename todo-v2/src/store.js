@@ -5,12 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todos: JSON.parse(localStorage.todos).list
-      ? JSON.parse(localStorage.todos).list
-      : [],
-    id: JSON.parse(localStorage.todos).id
-      ? JSON.parse(localStorage.todos).id
-      : 0
+    todos: localStorage.todos ? JSON.parse(localStorage.todos).list : [],
+    id: localStorage.todos ? JSON.parse(localStorage.todos).id : 0
   },
   getters: {
     todosOn(state) {
