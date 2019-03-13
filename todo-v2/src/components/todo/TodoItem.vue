@@ -5,22 +5,21 @@
     <input
       type="text"
       class="todo-item__text"
-      :class="{'on-edit': item.onEdit }"
+      :id="inputId"
       v-model="item.text"
       @keyup.enter="editDone"
-      @blur="editDone"
-      @focus="editTodo"
-      :disabled="!item.onEdit"
+      @blur="editable=true"
+      :disabled="item.done"
     >
-    <button @click="editTodo" v-show="!item.done && !item.onEdit">
+    <button @click="editTodo" class="todo-item-edit" :class="{off: item.done }">
       <i class="fas fa-edit"></i>
     </button>
     <button @click="removeTodo">
       <i class="fas fa-trash-alt"></i>
     </button>
-    <button>
+    <!-- <button>
       <i class="fas fa-list-ul"></i>
-    </button>
+    </button>-->
   </li>
 </template>
 <script>
@@ -28,21 +27,29 @@ import { mapActions } from 'vuex'
 export default {
   props: ['item'],
   data() {
-    return {}
+    return {
+      editable: true
+    }
   },
   watch: {},
-  computed: {},
+  computed: {
+    inputId() {
+      return `input` + this.item.id
+    }
+  },
   created() {},
   methods: {
     ...mapActions('todos', ['updateTodoDone']),
     removeTodo() {
       this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
     },
-    editTodo() {
-      this.item.onEdit = true
+    editTodo(e) {
+      // this.item.onEdit = true
+      document.getElementById(this.inputId).focus()
     },
     editDone() {
-      this.item.onEdit = false
+      this.editable = false
+      document.getElementById(this.inputId).blur()
     },
     //--- done: true, false 간 이동
     dragStart(e) {
@@ -74,10 +81,10 @@ export default {
     border: none;
     background: none;
     transition: all 0.2s;
-
-    &.on-edit {
-      // border-bottom: 1px dotted #ddd;
-      // background-color: #fff;
+  }
+  &-edit {
+    &.off {
+      visibility: hidden;
     }
   }
 }

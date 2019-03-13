@@ -25,9 +25,8 @@ const mutations = {
   },
   updateTodoDone(state, { id, isDone }) {
     const tgIdx = state.list.findIndex(ele => ele.id == id)
-    const tgTodo = state.list.find(ele => ele.id == id)
-    state.list.splice(tgIdx, 1)
-    state.list.push({ ...tgTodo, done: isDone })
+    const temp = state.list.splice(tgIdx, 1)
+    state.list.push({ ...temp[0], done: isDone })
   }
 }
 
@@ -37,8 +36,7 @@ const actions = {
     const info = {
       text: text,
       id: state.id,
-      done: false,
-      onEdit: false
+      done: false
     }
     commit('addTodo', { todoInfo: info })
     dispatch('setLocal')
