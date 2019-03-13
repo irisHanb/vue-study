@@ -64,6 +64,7 @@ export default {
     border: none;
     background: none;
     transition: all 0.2s;
+
     &.on-edit {
       border-bottom: 1px dotted #ddd;
       background-color: #fff;
