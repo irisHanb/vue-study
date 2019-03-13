@@ -23,17 +23,11 @@ const mutations = {
   removeTodo(state, { todoId }) {
     state.list = state.list.filter(el => el.id != todoId)
   },
-  dragDoneTodo(state, { id, isDone }) {
-    console.log('fitId>', id)
-    const tgIdx = state.list.findIndex((ele, idx, list) => {
-      if (ele.id == id) return idx
-    })
-    console.log(tgIdx)
-
-    state.list = state.list.map(ele => {
-      if (ele.id == id) ele.done = isDone
-      return ele
-    })
+  updateTodoDone(state, { id, isDone }) {
+    const tgIdx = state.list.findIndex(ele => ele.id == id)
+    const tgTodo = state.list.find(ele => ele.id == id)
+    state.list.splice(tgIdx, 1)
+    state.list.push({ ...tgTodo, done: isDone })
   }
 }
 
@@ -53,8 +47,8 @@ const actions = {
     commit('removeTodo', { todoId })
     dispatch('setLocal')
   },
-  dragDoneTodo({ state, commit, dispatch }, { id, isDone }) {
-    commit('dragDoneTodo', { id, isDone })
+  updateTodoDone({ state, commit, dispatch }, { id, isDone }) {
+    commit('updateTodoDone', { id, isDone })
     dispatch('setLocal')
   },
   setLocal({ state }) {

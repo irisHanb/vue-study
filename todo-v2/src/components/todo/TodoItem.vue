@@ -1,7 +1,7 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
     {{item.id}}
-    <input type="checkbox" v-model="item.done">
+    <input type="checkbox" @change="changeDone" v-model="item.done">
     <input
       type="text"
       class="todo-item__text"
@@ -34,6 +34,7 @@ export default {
   computed: {},
   created() {},
   methods: {
+    ...mapActions('todos', ['updateTodoDone']),
     removeTodo() {
       this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
     },
@@ -47,7 +48,14 @@ export default {
     dragStart(e) {
       e.dataTransfer.setData('text/plain', e.target.id)
     },
-    dragEnd(e) {}
+    dragEnd(e) {},
+    changeDone(e) {
+      // console.log('changeDone...', e.target.checked);
+      this.$store.dispatch('todos/updateTodoDone', {
+        id: this.item.id,
+        isDone: e.target.checked
+      })
+    }
   }
 }
 </script>

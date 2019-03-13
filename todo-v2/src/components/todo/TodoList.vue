@@ -39,12 +39,10 @@ export default {
     },
     dragLeave(e) {
       this.onDragOver = false
-      // console.log('dragLeave>')
     },
     drop(e) {
       this.onDragOver = false
-      // this.$store.commit('todos/dragDoneTodo', {
-      this.$store.dispatch('todos/dragDoneTodo', {
+      this.$store.dispatch('todos/updateTodoDone', {
         id: e.dataTransfer.getData('text').split('-')[1],
         isDone: this.isDone
       })
