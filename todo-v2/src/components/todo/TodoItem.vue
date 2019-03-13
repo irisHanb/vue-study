@@ -1,5 +1,6 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
+    {{item.id}}
     <input type="checkbox" v-model="item.done">
     <input
       type="text"
@@ -11,7 +12,7 @@
       @focus="editTodo"
       :disabled="!item.onEdit"
     >
-    <button @click="editTodo" v-if="!item.onEdit">
+    <button @click="editTodo" v-show="!item.done && !item.onEdit">
       <i class="fas fa-edit"></i>
     </button>
     <button @click="removeTodo">
@@ -67,8 +68,8 @@ export default {
     transition: all 0.2s;
 
     &.on-edit {
-      border-bottom: 1px dotted #ddd;
-      background-color: #fff;
+      // border-bottom: 1px dotted #ddd;
+      // background-color: #fff;
     }
   }
 }

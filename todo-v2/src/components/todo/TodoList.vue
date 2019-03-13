@@ -31,9 +31,7 @@ export default {
 
   computed: {},
   created() {},
-  mounted() {
-    // $('ul.example').sortable()
-  },
+  mounted() {},
   methods: {
     dragOver(e) {
       this.onDragOver = true
@@ -45,7 +43,8 @@ export default {
     },
     drop(e) {
       this.onDragOver = false
-      this.$store.commit('todos/dragDoneTodo', {
+      // this.$store.commit('todos/dragDoneTodo', {
+      this.$store.dispatch('todos/dragDoneTodo', {
         id: e.dataTransfer.getData('text').split('-')[1],
         isDone: this.isDone
       })

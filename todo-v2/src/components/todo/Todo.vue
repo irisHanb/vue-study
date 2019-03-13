@@ -29,7 +29,7 @@ export default {
 
   components: { TodoInput, TodoList },
   created() {
-    console.log(this.todos)
+    console.log(JSON.stringify(this.todos))
   },
   methods: {}
 }
