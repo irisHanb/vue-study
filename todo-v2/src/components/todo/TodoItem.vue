@@ -33,7 +33,7 @@ export default {
   created() {},
   methods: {
     removeTodo() {
-      this.$store.commit('removeTodo', { todoId: this.item.id })
+      this.$store.commit('todos/removeTodo', { todoId: this.item.id })
     },
     editTodo() {
       this.item.onEdit = true

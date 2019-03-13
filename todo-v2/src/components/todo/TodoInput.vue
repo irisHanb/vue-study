@@ -16,13 +16,12 @@ export default {
   created() {},
 
   methods: {
-    // ...mapMutations(['addTodo']),
     addTodo() {
       if (!this.todoText) {
         alert('할일을 입력해 주세요~')
         return
       }
-      this.$store.commit('addTodo', { text: this.todoText })
+      this.$store.commit('todos/addTodo', { text: this.todoText })
       this.todoText = null
     }
   }
@@ -33,15 +32,10 @@ export default {
   display: flex;
   justify-content: space-between;
 
-  & > * {
-    // height: 2em;
-  }
   input {
     width: 80%;
     padding: 0.3em;
     margin-right: 0.5em;
-  }
-  button {
   }
 }
 </style>

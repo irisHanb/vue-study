@@ -37,15 +37,15 @@ export default {
   methods: {
     dragOver(e) {
       this.onDragOver = true
-      console.log('drageOver>', this.isDone)
+      // console.log('drageOver>', this.isDone)
     },
     dragLeave(e) {
       this.onDragOver = false
-      console.log('dragLeave>')
+      // console.log('dragLeave>')
     },
     drop(e) {
       this.onDragOver = false
-      this.$store.commit('dragDoneTodo', {
+      this.$store.commit('todos/dragDoneTodo', {
         id: e.dataTransfer.getData('text').split('-')[1],
         isDone: this.isDone
       })
@@ -68,8 +68,6 @@ export default {
     margin-top: 0.2em;
     font-weight: bold;
     text-align: left;
-  }
-  ul {
   }
 }
 </style>

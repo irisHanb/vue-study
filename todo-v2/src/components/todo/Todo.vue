@@ -18,16 +18,18 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['todos']),
-    ...mapGetters({
-      todosDone: 'todosDone',
-      todosOn: 'todosOn'
+    ...mapState('todos', {
+      todos: 'list'
+    }),
+    ...mapGetters('todos', {
+      todosOn: 'listOn',
+      todosDone: 'listDone'
     })
   },
 
   components: { TodoInput, TodoList },
   created() {
-    console.log( localStorage.todos);
+    console.log(this.todos)
   },
   methods: {}
 }
