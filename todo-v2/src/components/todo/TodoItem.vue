@@ -8,8 +8,8 @@
       :id="inputId"
       v-model="item.text"
       @keyup.enter="editDone"
-      @blur="editable=true"
-      disabled
+      @blur="editDone"
+      :disabled="!editable"
     >
     <button @click="editTodo" class="todo-item-edit" :class="{off: item.done }">
       <i class="fas fa-edit"></i>
@@ -28,7 +28,7 @@ export default {
   props: ['item'],
   data() {
     return {
-      editable: true
+      editable: false
     }
   },
   watch: {},
@@ -44,7 +44,7 @@ export default {
       this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
     },
     editTodo(e) {
-      // this.item.onEdit = true
+      this.editable = true
       document.getElementById(this.inputId).focus()
     },
     editDone() {
