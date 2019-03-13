@@ -9,7 +9,7 @@
       v-model="item.text"
       @keyup.enter="editDone"
       @blur="editable=true"
-      :disabled="item.done"
+      disabled
     >
     <button @click="editTodo" class="todo-item-edit" :class="{off: item.done }">
       <i class="fas fa-edit"></i>

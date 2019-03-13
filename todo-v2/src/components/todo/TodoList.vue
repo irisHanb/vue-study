@@ -8,15 +8,15 @@
   >
     <h3>{{title}}</h3>
     <hr>
-    <ul class="example">
+    <draggable class="example" draggable=".todo-item">
       <Item v-for="item in list" :item="item" :key="item.id" :id="`item-` + item.id"></Item>
-    </ul>
+    </draggable>
   </div>
 </template>
 <script>
 import Item from '@/components/todo/TodoItem'
 import { mapState, mapGetters, mapMutations } from 'vuex'
-import { constants } from 'fs'
+import draggable from 'vuedraggable'
 
 export default {
   props: ['title', 'list', 'isDone'],
@@ -27,7 +27,7 @@ export default {
     }
   },
 
-  components: { Item },
+  components: { Item, draggable },
 
   computed: {},
   created() {},
