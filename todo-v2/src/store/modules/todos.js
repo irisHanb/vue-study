@@ -56,14 +56,18 @@ const actions = {
       done: false
     }
     commit('addTodo', info)
-    todoApi.setList({ id: state.id, list: state.list })
+    dispatch('setLocal')
   },
   removeTodo({ state, commit, dispatch }, { todoId }) {
     commit('removeTodo', { todoId })
-    todoApi.setList({ id: state.id, list: state.list })
+    dispatch('setLocal')
   },
   updateTodoDone({ state, commit, dispatch }, { id, isDone }) {
     commit('updateTodoDone', { id, isDone })
+    dispatch('setLocal')
+  },
+  setLocal() {
+    console.log('fn: setLocal')
     todoApi.setList({ id: state.id, list: state.list })
   }
 }
