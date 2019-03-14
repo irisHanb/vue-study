@@ -6,7 +6,7 @@
     @dragleave.prevent="dragLeave"
     @drop.prevent="drop"
   >
-    <h3>{{title}}</h3>
+    <h3>{{title + '( ' + list.length + '/' + all.length + ' )'}}</h3>
     <hr>
     <draggable class="example" draggable=".todo-item">
       <Item v-for="item in list" :item="item" :key="item.id" :id="`item-` + item.id"></Item>
@@ -17,7 +17,6 @@
 import Item from '@/components/todo/TodoItem'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import draggable from 'vuedraggable'
-import { constants } from 'fs'
 
 export default {
   props: ['title', 'list', 'isDone'],
@@ -30,13 +29,14 @@ export default {
 
   components: { Item, draggable },
 
-  computed: {},
+  computed: {
+    ...mapState('todos', { all: 'list' })
+  },
   created() {},
   mounted() {},
   methods: {
     dragOver(e) {
       this.onDragOver = true
-      // console.log('drageOver>', this.isDone)
     },
     dragLeave(e) {
       this.onDragOver = false

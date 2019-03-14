@@ -1,6 +1,6 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
-    {{item.id}}
+    <!-- {{item.id}} -->
     <input type="checkbox" @change="changeDone" v-model="item.done">
     <input
       type="text"
