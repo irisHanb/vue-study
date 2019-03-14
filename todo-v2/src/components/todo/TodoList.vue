@@ -42,6 +42,8 @@ export default {
       this.onDragOver = false
     },
     drop(e) {
+      const tgId = e.dataTransfer.getData('text')
+      console.log('list> drop> ', tgId)
       this.onDragOver = false
       this.$store.dispatch('todos/updateTodoDone', {
         id: e.dataTransfer.getData('text'),

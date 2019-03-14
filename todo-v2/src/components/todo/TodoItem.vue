@@ -37,7 +37,9 @@ export default {
       return `input` + this.item.id
     }
   },
-  created() {},
+  created() {
+    console.log(this.item.id)
+  },
   methods: {
     ...mapActions('todos', ['updateTodoDone']),
     removeTodo() {
@@ -53,7 +55,9 @@ export default {
     },
     //--- done: true, false 간 이동
     dragStart(e) {
-      // console.log('dragStarg> ', this.item.id)
+      const itemData = this.item.id
+      console.log('dragStarg> ', itemData)
+      console.log(e.target)
       e.dataTransfer.setData('text/plain', this.item.id)
     },
     dragEnd(e) {},

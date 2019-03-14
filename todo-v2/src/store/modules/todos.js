@@ -24,10 +24,11 @@ const mutations = {
     state.list = state.list.filter(el => el.id != todoId)
   },
   updateTodoDone(state, { id, isDone }) {
+    console.log('drop>> ', id, isDone)
+
     const tgIdx = state.list.findIndex(ele => ele.id == id)
     const temp = state.list.splice(tgIdx, 1)
     state.list.push({ ...temp[0], done: isDone })
-    /// console.log('drop>> ', id, isDone)
   }
 }
 
