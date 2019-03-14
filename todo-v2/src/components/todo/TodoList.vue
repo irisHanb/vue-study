@@ -17,6 +17,7 @@
 import Item from '@/components/todo/TodoItem'
 import { mapState, mapGetters, mapMutations } from 'vuex'
 import draggable from 'vuedraggable'
+import { constants } from 'fs'
 
 export default {
   props: ['title', 'list', 'isDone'],
@@ -43,7 +44,7 @@ export default {
     drop(e) {
       this.onDragOver = false
       this.$store.dispatch('todos/updateTodoDone', {
-        id: e.dataTransfer.getData('text').split('-')[1],
+        id: e.dataTransfer.getData('text'),
         isDone: this.isDone
       })
     }

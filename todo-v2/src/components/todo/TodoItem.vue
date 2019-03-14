@@ -53,7 +53,8 @@ export default {
     },
     //--- done: true, false 간 이동
     dragStart(e) {
-      e.dataTransfer.setData('text/plain', e.target.id)
+      // console.log('dragStarg> ', this.item.id)
+      e.dataTransfer.setData('text/plain', this.item.id)
     },
     dragEnd(e) {},
     changeDone(e) {
