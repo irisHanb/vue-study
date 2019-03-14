@@ -11,7 +11,7 @@
 <script>
 import TodoInput from '@/components/todo/TodoInput'
 import TodoList from '@/components/todo/TodoList'
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   data() {
@@ -29,9 +29,12 @@ export default {
 
   components: { TodoInput, TodoList },
   created() {
-    console.log(JSON.stringify(this.todos))
+    this.initInfo()
+    // console.log(JSON.stringify(this.todos))
   },
-  methods: {}
+  methods: {
+    ...mapActions('todos', ['initInfo'])
+  }
 }
 </script>
 <style lang="scss">

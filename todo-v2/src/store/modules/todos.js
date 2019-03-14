@@ -1,7 +1,9 @@
+import todoApi from '../../api/todoAPI'
+
 // initial state
 const state = {
-  list: localStorage.todos ? JSON.parse(localStorage.todos).list : [],
-  id: localStorage.todos ? JSON.parse(localStorage.todos).id : 0
+  list: [],
+  id: 1
 }
 
 // getters
@@ -16,44 +18,53 @@ const getters = {
 
 // mutations
 const mutations = {
-  addTodo(state, { todoInfo }) {
+  initInfo(state, info) {
+    state.list = [...info.list]
+    state.id = info.id
+  },
+  addTodo(state, info) {
+    state.list.push(info)
     state.id++
-    state.list.push(todoInfo)
   },
   removeTodo(state, { todoId }) {
     state.list = state.list.filter(el => el.id != todoId)
+    if (state.list.length === 0) state.id = 1
   },
   updateTodoDone(state, { id, isDone }) {
     console.log('drop>> ', id, isDone)
-
     const tgIdx = state.list.findIndex(ele => ele.id == id)
     const temp = state.list.splice(tgIdx, 1)
     state.list.push({ ...temp[0], done: isDone })
+  },
+  updateTodo(state, todo) {
+    state.list = state.list.map(ele => {
+      if (ele.id == id) ele.done = done
+      return ele
+    })
   }
 }
 
 // actions
 const actions = {
-  addTodo({ state, commit, dispatch }, { text }) {
+  initInfo({ state, commit }) {
+    todoApi.getInfo(info => commit('initInfo', info))
+  },
+  addTodo({ state, commit, dispatch }, todoText) {
     const info = {
-      text: text,
       id: state.id,
+      text: todoText,
       done: false
     }
-    commit('addTodo', { todoInfo: info })
-    dispatch('setLocal')
+    commit('addTodo', info)
+    todoApi.setList({ id: state.id, list: state.list })
   },
   removeTodo({ state, commit, dispatch }, { todoId }) {
     commit('removeTodo', { todoId })
-    dispatch('setLocal')
+    todoApi.setList({ id: state.id, list: state.list })
   },
   updateTodoDone({ state, commit, dispatch }, { id, isDone }) {
     commit('updateTodoDone', { id, isDone })
-    dispatch('setLocal')
-  },
-  setLocal({ state }) {
-    const info = { list: state.list, id: state.id }
-    localStorage.todos = JSON.stringify(info)
+    todoApi.setList({ id: state.id, list: state.list })
   }
 }
 

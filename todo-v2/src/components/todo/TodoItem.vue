@@ -1,7 +1,7 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
-    <!-- {{item.id}} -->
-    <input type="checkbox" @change="changeDone" v-model="item.done">
+    {{item.id}}
+    <input type="checkbox" @change="changeDone" v-model="checked">
     <input
       type="text"
       class="todo-item__text"
@@ -23,7 +23,7 @@
   </li>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   props: ['item'],
   data() {
@@ -33,6 +33,15 @@ export default {
   },
   watch: {},
   computed: {
+    ...mapMutations('todos', ['updateTodo']),
+    checked: {
+      get() {
+        return this.item.done
+      },
+      set(bool) {
+        this.checked = bool
+      }
+    },
     inputId() {
       return `input` + this.item.id
     }

@@ -1,13 +1,13 @@
 <template>
   <div class="todo-input">
-    <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText" @keyup.enter="addTodo">
+    <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText" @keyup.enter="updateTodoText">
     <button @click="addTodo">
       <i class="fas fa-plus-circle"></i>
     </button>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -19,12 +19,13 @@ export default {
 
   methods: {
     ...mapActions('todos', ['addTodo']),
-    addTodo() {
+    updateTodoText() {
       if (!this.todoText) {
-        alert('할일을 입력해 주세요~')
+        alert('할일을 입력하세요.')
+        this.todoText = null
         return
       }
-      this.$store.dispatch('todos/addTodo', { text: this.todoText })
+      this.addTodo(this.todoText)
       this.todoText = null
     }
   }
