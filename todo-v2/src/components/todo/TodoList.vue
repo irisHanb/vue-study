@@ -2,9 +2,9 @@
   <div
     class="todos-list"
     :class="{'on-drag-over': onDragOver}"
+    @drop.prevent="drop"
     @dragover.prevent="dragOver"
     @dragleave.prevent="dragLeave"
-    @drop.prevent="drop"
   >
     <h3>{{title + '( ' + list.length + '/' + all.length + ' )'}}</h3>
     <hr>
@@ -15,7 +15,7 @@
 </template>
 <script>
 import Item from '@/components/todo/TodoItem'
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import draggable from 'vuedraggable'
 
 export default {
@@ -35,6 +35,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    ...mapActions('todos', ['updateTodo', 'updateTodoDone']),
     dragOver(e) {
       this.onDragOver = true
     },
@@ -42,11 +43,9 @@ export default {
       this.onDragOver = false
     },
     drop(e) {
-      const tgId = e.dataTransfer.getData('text')
-      console.log('list> drop> ', tgId)
       this.onDragOver = false
-      this.$store.dispatch('todos/updateTodoDone', {
-        id: e.dataTransfer.getData('text'),
+      this.updateTodoDone({
+        id: e.dataTransfer.getData('text/plain'),
         isDone: this.isDone
       })
     }

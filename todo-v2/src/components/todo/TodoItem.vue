@@ -1,29 +1,27 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
     {{item.id}}
-    <input type="checkbox" @change="changeDone" v-model="checked">
+    <input type="checkbox" v-model="isDone">
     <input
       type="text"
       class="todo-item__text"
       :id="inputId"
-      v-model="item.text"
-      @keyup.enter="editDone"
-      @blur="editDone"
+      v-model="todoText"
       :disabled="!editable"
+      @blur="editDone"
+      @keyup.enter="editDone"
     >
-    <button @click="editTodo" class="todo-item-edit" :class="{off: item.done }">
+    <button @click="editOn" class="todo-item-edit" :class="{off: isDone || editable }">
       <i class="fas fa-edit"></i>
     </button>
     <button @click="removeTodo">
       <i class="fas fa-trash-alt"></i>
     </button>
-    <!-- <button>
-      <i class="fas fa-list-ul"></i>
-    </button>-->
   </li>
 </template>
 <script>
 import { mapActions, mapMutations } from 'vuex'
+import { constants } from 'fs'
 export default {
   props: ['item'],
   data() {
@@ -33,13 +31,21 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapMutations('todos', ['updateTodo']),
-    checked: {
+    ...mapMutations('todos', []),
+    isDone: {
       get() {
         return this.item.done
       },
       set(bool) {
-        this.checked = bool
+        this.updateTodo({ ...this.item, done: bool })
+      }
+    },
+    todoText: {
+      get() {
+        return this.item.text
+      },
+      set(st) {
+        this.updateTodo({ ...this.item, text: st })
       }
     },
     inputId() {
@@ -50,33 +56,24 @@ export default {
     console.log(this.item.id)
   },
   methods: {
-    ...mapActions('todos', ['updateTodoDone']),
+    ...mapActions('todos', ['updateTodo']),
     removeTodo() {
       this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
     },
-    editTodo(e) {
+    editOn() {
       this.editable = true
-      document.getElementById(this.inputId).focus()
+      setTimeout(() => document.getElementById(this.inputId).focus(), 0)
     },
     editDone() {
       this.editable = false
-      document.getElementById(this.inputId).blur()
+      setTimeout(() => document.getElementById(this.inputId).blur(), 0)
     },
     //--- done: true, false 간 이동
     dragStart(e) {
-      const itemData = this.item.id
-      console.log('dragStarg> ', itemData)
-      console.log(e.target)
+      console.log(this.item.id)
       e.dataTransfer.setData('text/plain', this.item.id)
     },
-    dragEnd(e) {},
-    changeDone(e) {
-      // console.log('changeDone...', e.target.checked);
-      this.$store.dispatch('todos/updateTodoDone', {
-        id: this.item.id,
-        isDone: e.target.checked
-      })
-    }
+    dragEnd(e) {}
   }
 }
 </script>

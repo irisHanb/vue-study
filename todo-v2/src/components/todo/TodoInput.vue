@@ -1,6 +1,6 @@
 <template>
   <div class="todo-input">
-    <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText" @keyup.enter="updateTodoText">
+    <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText" @keyup.enter="updateList">
     <button @click="addTodo">
       <i class="fas fa-plus-circle"></i>
     </button>
@@ -19,7 +19,7 @@ export default {
 
   methods: {
     ...mapActions('todos', ['addTodo']),
-    updateTodoText() {
+    updateList() {
       if (!this.todoText) {
         alert('할일을 입력하세요.')
         this.todoText = null

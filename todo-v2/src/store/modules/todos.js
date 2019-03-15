@@ -30,17 +30,15 @@ const mutations = {
     state.list = state.list.filter(el => el.id != todoId)
     if (state.list.length === 0) state.id = 1
   },
+  updateTodo(state, todo) {
+    const tgId = todo.id
+    state.list.splice(state.list.findIndex(el => el.id == tgId), 1, todo)
+  },
   updateTodoDone(state, { id, isDone }) {
     console.log('drop>> ', id, isDone)
     const tgIdx = state.list.findIndex(ele => ele.id == id)
     const temp = state.list.splice(tgIdx, 1)
     state.list.push({ ...temp[0], done: isDone })
-  },
-  updateTodo(state, todo) {
-    state.list = state.list.map(ele => {
-      if (ele.id == id) ele.done = done
-      return ele
-    })
   }
 }
 
@@ -62,8 +60,12 @@ const actions = {
     commit('removeTodo', { todoId })
     dispatch('setLocal')
   },
-  updateTodoDone({ state, commit, dispatch }, { id, isDone }) {
-    commit('updateTodoDone', { id, isDone })
+  updateTodo({ state, commit, dispatch }, todo) {
+    commit('updateTodo', todo)
+    dispatch('setLocal')
+  },
+  updateTodoDone({ state, commit, dispatch }, info) {
+    commit('updateTodoDone', info)
     dispatch('setLocal')
   },
   setLocal() {

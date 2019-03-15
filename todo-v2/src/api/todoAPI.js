@@ -2,9 +2,9 @@ import store from '../store/'
 
 // todo data, api
 const _list = [
-  { id: 1, text: 'your first todo', done: false },
-  { id: 2, text: 'read book', done: false },
-  { id: 3, text: 'cook for dinner', done: false }
+  { text: 'your first todo', done: false, id: 1 },
+  { text: 'read book', done: false, id: 2 },
+  { text: 'cook for dinner', done: false, id: 3 }
 ]
 const _id = 4
 
