@@ -1,4 +1,5 @@
 import todoApi from '../../api/todoAPI'
+import * as types from './todosType'
 
 // initial state
 const state = {
@@ -22,7 +23,7 @@ const mutations = {
     state.list = [...info.list]
     state.id = info.id
   },
-  addTodo(state, info) {
+  [types.ADD_TODO](state, info) {
     state.list.push(info)
     state.id++
   },
@@ -47,13 +48,13 @@ const actions = {
   initInfo({ state, commit }) {
     todoApi.getInfo(info => commit('initInfo', info))
   },
-  addTodo({ state, commit, dispatch }, todoText) {
+  [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
     const info = {
       id: state.id,
       text: todoText,
       done: false
     }
-    commit('addTodo', info)
+    commit(types.ADD_TODO, info)
     dispatch('setLocal')
   },
   removeTodo({ state, commit, dispatch }, { todoId }) {
