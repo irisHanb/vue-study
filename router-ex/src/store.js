@@ -7,21 +7,27 @@ export default new Vuex.Store({
   state: {
     users: [{ id: 'hanb', password: '1111' }],
     user: null,
-    isLogin: false,
-    isLoginSuccess: false,
+    isLogin: false,    
     isMembers: false
   },
-  mutations: {},
+  mutations: {
+    login(state, userInfo){
+      state.user = userInfo;
+      state.isLogin = true;
+      state.isMembers = true;
+    }
+  },
   actions: {
     checkMember({ state, commit }, info) {
       let tgUser = null
       state.users.forEach(ele => {
-        if (ele.id === info.id) tgUser = { ...info }
+        if (ele.id === info.id) tgUser = {...ele};
       })
       if (tgUser) {
-        console.log(tgUser)
+        commit('login', tgUser);
+        this.$router.push({name: 'home'});
       } else {
-        console.log('haveto. sign up>  ', tgUser)
+        alert( '가입된 회원이 아닙니다. 회원가입을 해주세요~');
       }
     }
   }

@@ -3,31 +3,28 @@
     <v-layout align-center row wrap>
       <v-flex xs12>
         <v-card>
-          <input v-validate="'required'" name="myinput" type="text">
-          <span>{{ errors.first('myinput') }}</span>
-
-          <v-card-actions>
-            <span>{{ errors.first('myId') }}id 입력해라</span>
+          <v-card-actions @keyup.enter="checkMember({id, password})">
 
             <div class="pa-3">
               <v-text-field
                 type="text"
                 v-model="id"
                 label="아이디를 입력하세요."
-                v-validate="'required'"
-                name="myId"
+                required                
+                :rules="[(v) => !!v || '아이디 입력은 필수 사항입니다.']"
               ></v-text-field>
               <v-text-field
                 name="password"
                 type="password"
-                v-model="password"
-                v-validate="'required'"
+                v-model="password"                
                 label="비밀번호를 입력하세요."
+                required
+                :rules="[(v) => !!v || '비밀번호 입력은 필수 사항입니다.']"
               ></v-text-field>
             </div>
           </v-card-actions>
 
-          <v-btn flat>LogIn</v-btn>
+          <v-btn flat @click="checkMember({id, password})">LogIn</v-btn>
           <v-btn flat v-if="!isMembers">Sign up</v-btn>
         </v-card>
       </v-flex>
@@ -42,10 +39,11 @@ export default {
     id: null,
     password: null
   }),
-  computed: {
-    ...mapState({
-      isMembers: state => state.isMembers
-    })
+  computed: {     
+    isMembers(){
+      return false;
+    }   
+    
   },
   methods: {
     ...mapActions(['checkMember'])
