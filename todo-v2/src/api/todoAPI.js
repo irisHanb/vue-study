@@ -1,5 +1,3 @@
-import store from '../store/'
-
 // todo data, api
 const _list = [
   { text: 'your first todo', done: false, id: 1 },
