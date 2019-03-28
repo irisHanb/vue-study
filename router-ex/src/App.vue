@@ -43,6 +43,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 #app {
+  background-image: url(https://source.unsplash.com/random);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 </style>
 
