@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    catch error
+    <script>
+      function job(a, b, callback) {
+        setTimeout(() => {
+          try {
+            if (typeof a != 'number' || typeof b != 'number') {
+              callback(new Error('숫자만 입력해주세요.'));
+            }
+            callback(null, a + b);
+          } catch (e) {
+            callback(e);
+          }
+        }, 1000);
+      }
+
+      function fnCallback() {
+        job(0, 'a', (err, result) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          job(result, 2, (err, result) => {
+            if (err) {
+              console.log(err);
+              return;
+            }
+            job(result, 3, (err, result) => {
+              if (err) console.log(e);
+              return;
+              job(result, 4, (err, result) => {
+                if (err) console.log(err);
+                return;
+                job(result, (err, result) => {});
+              });
+            });
+          });
+        });
+      }
+      // fnCallback();
+
+      //== promise
+      function jobP(a, b) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (typeof a === 'number' && typeof b === 'number') {
+              console.log('resolve');
+              resolve(a + b);
+            } else {
+              reject('숫자만 입력해라...');
+            }
+          }, 1000);
+        });
+      }
+
+      function fnPromise() {
+        jobP(0, 'a')
+          .then(v => jobP(v, 2))
+          .then(v => jobP(v, 3))
+          .then(v => jobP(v, 4))
+          .then(v => jobP(v, 5))
+          .catch(e => console.log(e));
+      }
+      // fnPromise();
+
+      //=== async/await
+      async function getSum() {
+        let result = 0;
+        let cnt = 1;
+        try {
+          for (let i = 0; i < 5; i++) {
+            if (i === 2) result = 'a';
+            result = await jobP(result, cnt++);
+          }
+        } catch (e) {
+          console.log('promiseError> ', e);
+        }
+        // console.log('done>> result: ', result);
+      }
+      // getSum();
+    </script>
+  </body>
+</html>
