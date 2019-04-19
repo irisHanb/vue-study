@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+      // 참고: http://adampaxton.com/handling-multiple-javascript-promises-even-if-some-fail/
+      // Promise.all 은 promise중 하나라도 reject 이면  바로 reject
+      const doPromiseAll = () => {
+        var p = new Promise((resolve, reject) => {
+          resolve('one');
+        });
+        var p2 = new Promise((resolve, reject) => {
+          reject('two was rejected');
+        });
+        var p3 = new Promise((resolve, reject) => {
+          resolve('three');
+        });
+        // console.log('=== error');
+        Promise.all([p, p2, p3])
+          .then(v => console.log('Promise.all> ', v))
+          .catch(err => {
+            console.error('Promise.all error', err);
+          });
+      };
+      // doPromiseAll();
+
+      // error를 다룰 promise에 바로 catch 로직을 추가해서 다룬다.
+      // Promise.all 의 결과값 받을 수 있음
+      const doPromiseAllHandleError = () => {
+        var p = new Promise((resolve, reject) => {
+          resolve('one');
+        });
+        var p2 = new Promise((resolve, reject) => {
+          reject('two rejected');
+        }).catch(error => {
+          // console.error(error); // undefined로 담김
+          return error; // error 객체를  반환해주면 Promise.all 의 반환배열에서 확인할 수 있다.
+        });
+        var p3 = new Promise((resolve, rejected) => {
+          resolve('three');
+        });
+        Promise.all([p, p2, p3])
+          .then(result => {
+            console.log('Promise.all> ', result);
+          })
+          .catch(error => {
+            console.error('Promise.all error', err);
+          });
+      };
+      // doPromiseAllHandleError();
+
+      // 혹은 다음과 같이 처리할 수도 있다.
+      const doPromiseAllHandleError2 = () => {
+        var p = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve('one');
+          }, 3000);
+        });
+        var p2 = new Promise((resolve, reject) => {
+          reject('two ::: rejected');
+        });
+
+        var p3 = new Promise((resolve, rejecct) => {
+          setTimeout(() => {
+            resolve('three');
+          }, 500);
+        });
+
+        Promise.all(
+          [p, p2, p3].map(promise => promise.catch(error => error))
+        ).then(result => console.log(result));
+      };
+      doPromiseAllHandleError2();
+    </script>
+  </body>
+</html>
