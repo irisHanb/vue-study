@@ -1,3 +1,6 @@
+import axios from 'axios'
+import { getDiffieHellman } from 'crypto'
+
 // todo data, api
 const _list = [
   { text: 'your first todo', done: false, id: 1 },
@@ -7,22 +10,54 @@ const _list = [
 const _id = 4
 
 export default {
-  getInfo(fn) {
-    setTimeout(() => {
-      let info = null
-      if (
-        !localStorage.todos ||
-        JSON.parse(localStorage.todos).list.length === 0
-      ) {
-        info = { id: _id, list: _list }
-      } else {
-        const localInfo = JSON.parse(localStorage.todos)
-        info = { id: localInfo.id, list: localInfo.list }
-      }
-      fn(info)
-    }, 1000)
+  getTodos(fn) {
+    axios
+      .get('http://localhost:3000/todos')
+      .then(function(res) {
+        fn(res.data)
+      })
+      .catch(function(error) {
+        console.log(error)
+      })
   },
-  setList(info) {
-    localStorage.todos = JSON.stringify(info)
+  addTodo({ id, text, done }, fn) {
+    axios
+      .post('http://localhost:3000/todos', {
+        id,
+        text,
+        done
+      })
+      .then(res => {
+        this.getTodos(fn)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+  delTodo({ id, text, done }, fn) {
+    console.log('delTodo> ', { id, text, done })
+    axios
+      .delete('http://localhost:3000/todos/' + id)
+      .then(res => {
+        this.getTodos(fn)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+  updateTodo({ id, text, done }, fn) {
+    // console.log('updateTodo> ', { id, text, done })
+    axios
+      .patch('http://localhost:3000/todos/' + id, {
+        text,
+        done
+      })
+      .then(res => {
+        console.log(res.data)
+        this.getTodos(fn)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }

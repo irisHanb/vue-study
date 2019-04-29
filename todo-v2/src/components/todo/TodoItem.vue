@@ -11,9 +11,11 @@
       @blur="editDone"
       @keyup.enter="editDone"
     >
+    <!-- edit button -->
     <button @click="editOn" class="todo-item-edit" :class="{off: isDone || editable }">
       <i class="fas fa-edit"></i>
     </button>
+    <!-- removebutton -->
     <button @click="removeTodo">
       <i class="fas fa-trash-alt"></i>
     </button>
@@ -31,7 +33,7 @@ export default {
   },
   watch: {},
   computed: {
-    ...mapMutations('todos', []),
+    ...mapMutations('todos', ['updateText']),
     isDone: {
       get() {
         return this.item.done
@@ -44,8 +46,8 @@ export default {
       get() {
         return this.item.text
       },
-      set(st) {
-        this.updateTodo({ ...this.item, text: st })
+      set(txt) {
+        this.$store.commit('todos/updateText', { ...this.item, text: txt })
       }
     },
     inputId() {
@@ -53,20 +55,28 @@ export default {
     }
   },
   created() {
-    console.log(this.item.id)
+    // console.log(this.item.id)
   },
   methods: {
     ...mapActions('todos', ['updateTodo']),
     removeTodo() {
-      this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
+      // this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
+      console.log(this.item)
+      this.$store.dispatch('todos/removeTodo', this.item)
     },
     editOn() {
       this.editable = true
+      // this.$store.dispatch('todos/removeTodo', this.item)
       setTimeout(() => document.getElementById(this.inputId).focus(), 0)
     },
+    // update
     editDone() {
       this.editable = false
-      setTimeout(() => document.getElementById(this.inputId).blur(), 0)
+      this.$store.dispatch('todos/updateTodo', {
+        ...this.item,
+        text: this.todoText
+      })
+      // setTimeout(() => document.getElementById(this.inputId).blur(), 0)
     },
     //--- done: true, false 간 이동
     dragStart(e) {

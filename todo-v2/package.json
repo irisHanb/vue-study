@@ -8,6 +8,7 @@
     "start": "json-server --watch db.json"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vuedraggable": "^2.20.0",

@@ -40,9 +40,6 @@ export default {
 </script>
 <style lang="scss">
 .todos {
-  max-width: 80%;
-  min-width: 700px;
-  margin: 0 auto;
   padding: 1.5em;
   background: #fff9db;
   h2 {

@@ -19,21 +19,49 @@ const getters = {
 
 // mutations
 const mutations = {
-  initInfo(state, info) {
-    state.list = [...info.list]
-    state.id = info.id
+  updateText(state, todo) {
+    console.log('updateText> ', todo)
+    state.list = state.list.map(obj => {
+      if (obj.id === todo.id) {
+        obj.text = todo.text
+      }
+      return obj
+    })    
   },
+  // load todos
+  initInfo(state, info) {
+    state.list = [...info]
+    state.id = ++info.length
+  },
+  // add todos
   [types.ADD_TODO](state, info) {
-    state.list.push(info)
+    todoApi.addTodo(
+      { id: info.id, text: info.text, done: info.done },
+      todos => {
+        state.list = [...todos]
+      }
+    )
     state.id++
   },
-  removeTodo(state, { todoId }) {
-    state.list = state.list.filter(el => el.id != todoId)
-    if (state.list.length === 0) state.id = 1
+  // delete todos
+  removeTodo(state, todo) {
+    todoApi.delTodo(
+      { id: todo.id, text: todo.text, done: todo.done },
+      todos => {
+        state.list = [...todos]
+      }
+    )
   },
   updateTodo(state, todo) {
-    const tgId = todo.id
-    state.list.splice(state.list.findIndex(el => el.id == tgId), 1, todo)
+    // console.log('update> ', todo)
+    // const tgId = todo.id
+    // state.list.splice(state.list.findIndex(el => el.id == tgId), 1, todo)
+    todoApi.updateTodo(
+      { id: todo.id, text: todo.text, done: todo.done },
+      todos => {
+        state.list = [...todos]
+      }
+    )
   },
   updateTodoDone(state, { id, isDone }) {
     console.log('drop>> ', id, isDone)
@@ -46,7 +74,7 @@ const mutations = {
 // actions
 const actions = {
   initInfo({ state, commit }) {
-    todoApi.getInfo(info => commit('initInfo', info))
+    todoApi.getTodos(info => commit('initInfo', info))
   },
   [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
     const info = {
@@ -57,21 +85,21 @@ const actions = {
     commit(types.ADD_TODO, info)
     dispatch('setLocal')
   },
-  removeTodo({ state, commit, dispatch }, { todoId }) {
-    commit('removeTodo', { todoId })
-    dispatch('setLocal')
+  removeTodo({ state, commit, dispatch }, todo) {
+    commit('removeTodo', todo)
+    // dispatch('setLocal')
   },
   updateTodo({ state, commit, dispatch }, todo) {
     commit('updateTodo', todo)
-    dispatch('setLocal')
+    // dispatch('setLocal')
   },
   updateTodoDone({ state, commit, dispatch }, info) {
     commit('updateTodoDone', info)
     dispatch('setLocal')
   },
   setLocal() {
-    console.log('fn: setLocal')
-    todoApi.setList({ id: state.id, list: state.list })
+    // console.log('fn: setLocal')
+    // todoApi.setList({ id: state.id, list: state.list })
   }
 }
 
