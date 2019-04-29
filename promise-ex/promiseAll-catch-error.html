@@ -10,7 +10,8 @@
     <script>
       // 참고: https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
       // 참고: http://adampaxton.com/handling-multiple-javascript-promises-even-if-some-fail/
-      // Promise.all 은 promise중 하나라도 reject 이면  바로 reject
+
+      // Promise.all 은 promise중 하나라도 reject 이면  바로 reject 한다.
       const doPromiseAll = () => {
         var p = new Promise((resolve, reject) => {
           resolve('one');
@@ -28,7 +29,7 @@
             console.error('Promise.all error', err);
           });
       };
-      // doPromiseAll();
+      doPromiseAll();
 
       // error를 다룰 promise에 바로 catch 로직을 추가해서 다룬다.
       // Promise.all 의 결과값 받을 수 있음
@@ -77,6 +78,13 @@
         ).then(result => console.log(result));
       };
       doPromiseAllHandleError2();
+
+      var fnTest = () => {
+        var p = new Promise((resolve, reject) => {
+          resolve('one');
+        });
+        var p2 = new Promise((resolve, reject));
+      };
     </script>
   </body>
 </html>
