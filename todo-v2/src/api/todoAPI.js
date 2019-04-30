@@ -1,18 +1,12 @@
 import axios from 'axios'
 import { getDiffieHellman } from 'crypto'
 
-// todo data, api
-const _list = [
-  { text: 'your first todo', done: false, id: 1 },
-  { text: 'read book', done: false, id: 2 },
-  { text: 'cook for dinner', done: false, id: 3 }
-]
-const _id = 4
+const apiUrl = 'http://localhost:3000/todos/'
 
 export default {
   getTodos(fn) {
     axios
-      .get('http://localhost:3000/todos')
+      .get(apiUrl)
       .then(function(res) {
         fn(res.data)
       })
@@ -20,26 +14,22 @@ export default {
         console.log(error)
       })
   },
-  addTodo({ id, text, done }, fn) {
+  addTodo(todo, fn) {
     axios
-      .post('http://localhost:3000/todos', {
-        id,
-        text,
-        done
-      })
+      .post(apiUrl, todo)
       .then(res => {
-        this.getTodos(fn)
+        fn()
       })
       .catch(error => {
         console.log(error)
       })
   },
-  delTodo({ id, text, done }, fn) {
-    console.log('delTodo> ', { id, text, done })
+  delTodo(id, fn) {
+    // console.log('delTodo> ', { id, text, done })
     axios
-      .delete('http://localhost:3000/todos/' + id)
+      .delete(apiUrl + id)
       .then(res => {
-        this.getTodos(fn)
+        fn()
       })
       .catch(error => {
         console.log(error)
@@ -48,7 +38,7 @@ export default {
   updateTodo({ id, text, done }, fn) {
     // console.log('updateTodo> ', { id, text, done })
     axios
-      .patch('http://localhost:3000/todos/' + id, {
+      .patch(apiUrl + id, {
         text,
         done
       })

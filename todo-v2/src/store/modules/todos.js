@@ -1,8 +1,11 @@
 import todoApi from '../../api/todoAPI'
 import * as types from './todosType'
 
+const dbUrl = 'http://localhost:3000/todos'
+
 // initial state
 const state = {
+  txt: '',
   list: [],
   id: 1
 }
@@ -19,30 +22,34 @@ const getters = {
 
 // mutations
 const mutations = {
+  setCurrentTxt(state, txt) {
+    console.log('setCurrent> ', txt)
+    state.txt = txt
+  },
+  [types.GET_TODOS](state, todos) {
+    console.log('get todos...')
+    state.list = [...todos]
+    state.id = ++todos.length
+    state.txt = ''
+  },
+
   updateText(state, todo) {
     console.log('updateText> ', todo)
     state.list = state.list.map(obj => {
       if (obj.id === todo.id) {
         obj.text = todo.text
+        obj.done = toto.done
       }
       return obj
-    })    
+    })
   },
+
   // load todos
-  initInfo(state, info) {
-    state.list = [...info]
-    state.id = ++info.length
+  initInfo(state, todos) {
+    state.list = [...todos]
+    state.id = ++todos.length
   },
-  // add todos
-  [types.ADD_TODO](state, info) {
-    todoApi.addTodo(
-      { id: info.id, text: info.text, done: info.done },
-      todos => {
-        state.list = [...todos]
-      }
-    )
-    state.id++
-  },
+
   // delete todos
   removeTodo(state, todo) {
     todoApi.delTodo(
@@ -71,20 +78,31 @@ const mutations = {
   }
 }
 
-// actions
+//=== actions
 const actions = {
-  initInfo({ state, commit }) {
-    todoApi.getTodos(info => commit('initInfo', info))
+  // get todos
+  [types.GET_TODOS]({ commit }) {
+    todoApi[types.GET_TODOS](todos => commit(types.GET_TODOS, todos))
   },
+  // add todo
   [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
-    const info = {
+    const todo = {
       id: state.id,
       text: todoText,
       done: false
     }
-    commit(types.ADD_TODO, info)
-    dispatch('setLocal')
+    todoApi[types.ADD_TODO](todo, () => dispatch(types.GET_TODOS))
   },
+  // delete todo
+  [types.DELETE_TODO](id) {
+    console.log('del> ', id)
+    // todoApi[types.DELETE_TODO](id, () => dispatch(types.GET_TODOS))
+  },
+
+  initInfo({ state, commit }) {
+    todoApi.getTodos(todos => commit('initInfo', todos))
+  },
+
   removeTodo({ state, commit, dispatch }, todo) {
     commit('removeTodo', todo)
     // dispatch('setLocal')

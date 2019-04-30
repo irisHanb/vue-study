@@ -16,7 +16,7 @@
       <i class="fas fa-edit"></i>
     </button>
     <!-- removebutton -->
-    <button @click="removeTodo">
+    <button @click="deleteTodo(item.id)">
       <i class="fas fa-trash-alt"></i>
     </button>
   </li>
@@ -58,12 +58,8 @@ export default {
     // console.log(this.item.id)
   },
   methods: {
-    ...mapActions('todos', ['updateTodo']),
-    removeTodo() {
-      // this.$store.dispatch('todos/removeTodo', { todoId: this.item.id })
-      console.log(this.item)
-      this.$store.dispatch('todos/removeTodo', this.item)
-    },
+    ...mapActions(['todos']),
+
     editOn() {
       this.editable = true
       // this.$store.dispatch('todos/removeTodo', this.item)

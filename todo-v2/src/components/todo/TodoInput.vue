@@ -1,20 +1,32 @@
 <template>
   <div class="todo-input">
-    <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText" @keyup.enter="updateList">
-    <button @click="addTodo">
-      <i class="fas fa-plus-circle"></i>
-    </button>
+    <form @submit.prevent="addTodo(todoText)">
+      <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText">
+      <button type="submit">
+        <i class="fas fa-plus-circle"></i>
+      </button>
+    </form>
   </div>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data() {
-    return {
-      todoText: null
+    return {}
+  },
+  computed: {
+    ...mapState('todos', ['txt']),
+    todoText: {
+      get() {
+        return this.txt
+      },
+      set(st) {
+        this.$store.commit('todos/setCurrentTxt', st)
+      }
     }
   },
+
   created() {},
 
   methods: {
@@ -25,13 +37,19 @@ export default {
         this.todoText = null
         return
       }
-      this.addTodo(this.todoText)
+      // this.addTodo(this.todoText)
       this.todoText = null
     }
   }
 }
 </script>
 <style lang="scss">
+form {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .todo-input {
   display: flex;
   justify-content: space-between;

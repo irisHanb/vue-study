@@ -30,11 +30,11 @@ export default {
 
   components: { TodoInput, TodoList },
   created() {
-    this.initInfo()
+    this.getTodos()
     // console.log(JSON.stringify(this.todos))
   },
   methods: {
-    ...mapActions('todos', ['initInfo'])
+    ...mapActions('todos', ['getTodos'])
   }
 }
 </script>
