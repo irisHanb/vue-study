@@ -1,22 +1,22 @@
 <template>
   <li class="todo-item" draggable="true" @dragstart="dragStart" @dragend="dragEnd">
-    {{item.id}}
-    <input type="checkbox" v-model="isDone">
+    {{todo.id}}
+    <input type="checkbox" v-model="todo.done" @change="update">
     <input
       type="text"
       class="todo-item__text"
       :id="inputId"
-      v-model="todoText"
+      v-model="todo.text"
       :disabled="!editable"
-      @blur="editDone"
-      @keyup.enter="editDone"
+      @blur="update"
+      @keyup.enter="update"
     >
     <!-- edit button -->
-    <button @click="editOn" class="todo-item-edit" :class="{off: isDone || editable }">
+    <button @click="editOn" class="todo-item-edit" :class="{off: todo.done || editable }">
       <i class="fas fa-edit"></i>
     </button>
-    <!-- removebutton -->
-    <button @click="deleteTodo(item.id)">
+    <!-- delete todo -->
+    <button @click="deleteTodo">
       <i class="fas fa-trash-alt"></i>
     </button>
   </li>
@@ -28,56 +28,39 @@ export default {
   props: ['item'],
   data() {
     return {
+      todo: null,
       editable: false
     }
   },
   watch: {},
   computed: {
-    ...mapMutations('todos', ['updateText']),
-    isDone: {
-      get() {
-        return this.item.done
-      },
-      set(bool) {
-        this.updateTodo({ ...this.item, done: bool })
-      }
-    },
-    todoText: {
-      get() {
-        return this.item.text
-      },
-      set(txt) {
-        this.$store.commit('todos/updateText', { ...this.item, text: txt })
-      }
-    },
     inputId() {
-      return `input` + this.item.id
+      return `input` + this.todo.id
     }
   },
   created() {
-    // console.log(this.item.id)
+    this.todo = { ...this.item }
   },
   methods: {
-    ...mapActions(['todos']),
+    ...mapMutations({ setOnDragTodo: 'todos/setOnDragTodo' }),
+    ...mapActions('todos', ['deleteTodo', 'updateTodo']),
 
+    deleteTodo() {
+      this.$store.dispatch('todos/deleteTodo', this.todo.id)
+    },
     editOn() {
       this.editable = true
-      // this.$store.dispatch('todos/removeTodo', this.item)
       setTimeout(() => document.getElementById(this.inputId).focus(), 0)
     },
     // update
-    editDone() {
+    update() {
       this.editable = false
-      this.$store.dispatch('todos/updateTodo', {
-        ...this.item,
-        text: this.todoText
-      })
-      // setTimeout(() => document.getElementById(this.inputId).blur(), 0)
+      this.updateTodo({ ...this.todo })
     },
     //--- done: true, false 간 이동
     dragStart(e) {
-      console.log(this.item.id)
-      e.dataTransfer.setData('text/plain', this.item.id)
+      this.setOnDragTodo({ ...this.todo, done: !this.todo.done })
+      e.dataTransfer.setData('text', this.todo.id)
     },
     dragEnd(e) {}
   }

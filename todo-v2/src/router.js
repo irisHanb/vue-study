@@ -8,15 +8,15 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/todos',
+      path: '/',
       name: 'todos',
       component: () => import(/* webpackChunkName: "todo" */ './views/Todo.vue')
-    },
-    {
-      path: '/about',
-      name: 'about',
-      component: () =>
-        import(/* webpackChunkName: "about" */ './views/About.vue')
     }
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   component: () =>
+    //     import(/* webpackChunkName: "about" */ './views/About.vue')
+    // }
   ]
 })

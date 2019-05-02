@@ -2,7 +2,7 @@
   "todos": [
     {
       "id": 1,
-      "text": "333",
+      "text": "111",
       "done": false
     },
     {
@@ -22,158 +22,22 @@
     },
     {
       "id": 5,
-      "text": "555",
+      "text": "55",
       "done": false
     },
     {
       "id": 6,
-      "text": "222",
+      "text": "ㅇㅇ",
       "done": false
     },
     {
       "id": 7,
-      "text": "555",
+      "text": "ㅇㄴㅁㄹㅇㄴㄹㅇㄴㅁㄹㅇ",
       "done": false
     },
     {
       "id": 8,
-      "text": "망아지",
-      "done": false
-    },
-    {
-      "id": 9,
-      "text": "강아지",
-      "done": false
-    },
-    {
-      "id": 10,
-      "text": "소오름",
-      "done": false
-    },
-    {
-      "id": 11,
-      "text": "",
-      "done": false
-    },
-    {
-      "id": 12,
-      "text": "",
-      "done": false
-    },
-    {
-      "id": 13,
-      "text": "",
-      "done": false
-    },
-    {
-      "id": 14,
-      "text": "",
-      "done": false
-    },
-    {
-      "id": 15,
-      "done": false
-    },
-    {
-      "id": 16,
-      "done": false
-    },
-    {
-      "id": 17,
-      "done": false
-    },
-    {
-      "id": 18,
-      "done": false
-    },
-    {
-      "id": 19,
-      "text": "555",
-      "done": false
-    },
-    {
-      "id": 20,
-      "text": "555",
-      "done": false
-    },
-    {
-      "id": 21,
-      "text": "888",
-      "done": false
-    },
-    {
-      "id": 22,
-      "text": "333",
-      "done": false
-    },
-    {
-      "id": 23,
-      "text": "333",
-      "done": false
-    },
-    {
-      "id": 24,
-      "text": "555",
-      "done": false
-    },
-    {
-      "id": 25,
-      "text": "333",
-      "done": false
-    },
-    {
-      "id": 26,
-      "text": "343",
-      "done": false
-    },
-    {
-      "id": 27,
-      "text": "666",
-      "done": false
-    },
-    {
-      "id": 28,
-      "text": "888",
-      "done": false
-    },
-    {
-      "id": 29,
-      "text": "999",
-      "done": false
-    },
-    {
-      "id": 30,
-      "text": "111",
-      "done": false
-    },
-    {
-      "id": 31,
-      "text": "333",
-      "done": false
-    },
-    {
-      "id": 32,
-      "text": "666",
-      "done": false
-    },
-    {
-      "id": 33,
-      "text": "222",
-      "done": false
-    },
-    {
-      "id": 34,
-      "text": "333",
-      "done": false
-    },
-    {
-      "id": 35,
-      "text": "555",
-      "done": false
-    },
-    {
-      "id": 36,
-      "text": "dsa",
+      "text": "ㅇㄴㅁㄹ",
       "done": false
     }
   ],

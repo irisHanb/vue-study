@@ -17,6 +17,7 @@
 import Item from '@/components/todo/TodoItem'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import draggable from 'vuedraggable'
+import { constants } from 'crypto'
 
 export default {
   props: ['title', 'list', 'isDone'],
@@ -35,7 +36,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    ...mapActions('todos', ['updateTodo', 'updateTodoDone']),
+    ...mapActions({ applyUpdate: 'todos/applyUpdate' }),
     dragOver(e) {
       this.onDragOver = true
     },
@@ -44,10 +45,7 @@ export default {
     },
     drop(e) {
       this.onDragOver = false
-      this.updateTodoDone({
-        id: e.dataTransfer.getData('text/plain'),
-        isDone: this.isDone
-      })
+      this.applyUpdate()
     }
   }
 }

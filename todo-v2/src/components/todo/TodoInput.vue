@@ -1,7 +1,7 @@
 <template>
   <div class="todo-input">
-    <form @submit.prevent="addTodo(todoText)">
-      <input type="text" placeholder="할일을 입력해주세요. " v-model="todoText">
+    <form @submit.prevent="addTodo">
+      <input type="text" placeholder="할일을 입력해주세요. " v-model="txt">
       <button type="submit">
         <i class="fas fa-plus-circle"></i>
       </button>
@@ -9,36 +9,28 @@
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
-    return {}
-  },
-  computed: {
-    ...mapState('todos', ['txt']),
-    todoText: {
-      get() {
-        return this.txt
-      },
-      set(st) {
-        this.$store.commit('todos/setCurrentTxt', st)
-      }
+    return {
+      txt: null
     }
   },
+  computed: {},
 
   created() {},
 
   methods: {
     ...mapActions('todos', ['addTodo']),
-    updateList() {
-      if (!this.todoText) {
+    addTodo() {
+      if (!this.txt) {
         alert('할일을 입력하세요.')
-        this.todoText = null
+        this.txt = null
         return
       }
-      // this.addTodo(this.todoText)
-      this.todoText = null
+      this.$store.dispatch('todos/addTodo', this.txt)
+      this.txt = null
     }
   }
 }

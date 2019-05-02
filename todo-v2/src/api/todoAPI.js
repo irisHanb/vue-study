@@ -24,7 +24,7 @@ export default {
         console.log(error)
       })
   },
-  delTodo(id, fn) {
+  deleteTodo(id, fn) {
     // console.log('delTodo> ', { id, text, done })
     axios
       .delete(apiUrl + id)
@@ -43,8 +43,7 @@ export default {
         done
       })
       .then(res => {
-        console.log(res.data)
-        this.getTodos(fn)
+        fn()
       })
       .catch(error => {
         console.log(error)

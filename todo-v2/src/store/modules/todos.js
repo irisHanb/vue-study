@@ -5,7 +5,7 @@ const dbUrl = 'http://localhost:3000/todos'
 
 // initial state
 const state = {
-  txt: '',
+  onDragingTodo: null,
   list: [],
   id: 1
 }
@@ -22,10 +22,6 @@ const getters = {
 
 // mutations
 const mutations = {
-  setCurrentTxt(state, txt) {
-    console.log('setCurrent> ', txt)
-    state.txt = txt
-  },
   [types.GET_TODOS](state, todos) {
     console.log('get todos...')
     state.list = [...todos]
@@ -33,48 +29,9 @@ const mutations = {
     state.txt = ''
   },
 
-  updateText(state, todo) {
-    console.log('updateText> ', todo)
-    state.list = state.list.map(obj => {
-      if (obj.id === todo.id) {
-        obj.text = todo.text
-        obj.done = toto.done
-      }
-      return obj
-    })
-  },
-
-  // load todos
-  initInfo(state, todos) {
-    state.list = [...todos]
-    state.id = ++todos.length
-  },
-
-  // delete todos
-  removeTodo(state, todo) {
-    todoApi.delTodo(
-      { id: todo.id, text: todo.text, done: todo.done },
-      todos => {
-        state.list = [...todos]
-      }
-    )
-  },
-  updateTodo(state, todo) {
-    // console.log('update> ', todo)
-    // const tgId = todo.id
-    // state.list.splice(state.list.findIndex(el => el.id == tgId), 1, todo)
-    todoApi.updateTodo(
-      { id: todo.id, text: todo.text, done: todo.done },
-      todos => {
-        state.list = [...todos]
-      }
-    )
-  },
-  updateTodoDone(state, { id, isDone }) {
-    console.log('drop>> ', id, isDone)
-    const tgIdx = state.list.findIndex(ele => ele.id == id)
-    const temp = state.list.splice(tgIdx, 1)
-    state.list.push({ ...temp[0], done: isDone })
+  // 현재 드래깅중인 todo 저장해두고 drop 일때 변경~
+  setOnDragTodo(state, todo) {
+    state.onDragingTodo = { ...todo }
   }
 }
 
@@ -86,6 +43,7 @@ const actions = {
   },
   // add todo
   [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
+    console.log(todoText)
     const todo = {
       id: state.id,
       text: todoText,
@@ -94,30 +52,16 @@ const actions = {
     todoApi[types.ADD_TODO](todo, () => dispatch(types.GET_TODOS))
   },
   // delete todo
-  [types.DELETE_TODO](id) {
-    console.log('del> ', id)
-    // todoApi[types.DELETE_TODO](id, () => dispatch(types.GET_TODOS))
-  },
-
-  initInfo({ state, commit }) {
-    todoApi.getTodos(todos => commit('initInfo', todos))
-  },
-
-  removeTodo({ state, commit, dispatch }, todo) {
-    commit('removeTodo', todo)
-    // dispatch('setLocal')
+  [types.DELETE_TODO]({ dispatch }, id) {
+    todoApi[types.DELETE_TODO](id, () => dispatch(types.GET_TODOS))
   },
   updateTodo({ state, commit, dispatch }, todo) {
-    commit('updateTodo', todo)
-    // dispatch('setLocal')
+    todoApi.updateTodo({ id: todo.id, text: todo.text, done: todo.done }, () =>
+      dispatch(types.GET_TODOS)
+    )
   },
-  updateTodoDone({ state, commit, dispatch }, info) {
-    commit('updateTodoDone', info)
-    dispatch('setLocal')
-  },
-  setLocal() {
-    // console.log('fn: setLocal')
-    // todoApi.setList({ id: state.id, list: state.list })
+  applyUpdate({ state, dispatch }) {
+    dispatch('updateTodo', state.onDragingTodo)
   }
 }
 
