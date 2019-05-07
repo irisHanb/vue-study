@@ -6,8 +6,8 @@ import axios from 'axios'
 
 import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 
-Vue.config.productionTip = false
-Vue.prototype.$http = axios
+Vue.config.productionTip = false;
+// Vue.prototype.$http = axios;
 
 new Vue({
   router,

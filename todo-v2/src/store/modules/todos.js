@@ -1,8 +1,6 @@
 import todoApi from '../../api/todoAPI'
 import * as types from './todosType'
 
-const dbUrl = '/api/todos'
-
 // initial state
 const state = {
   onDragingTodo: null,
@@ -38,7 +36,7 @@ const mutations = {
 //=== actions
 const actions = {
   // get todos
-  [types.GET_TODOS]: async ({ commit }) => {
+  [types.GET_TODOS]: async ({ commit }) => {     
     try {
       const res = await todoApi.getTodos()
       commit(types.GET_TODOS, res.data)

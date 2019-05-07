@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const apiUrl = '/api/todos'
-const apiUrl = 'http://localhost:3000/todos'
+const apiUrl = 'http://localhost:3000/memos'
 
 export default {
   getTodos(fn) {

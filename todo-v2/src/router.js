@@ -9,8 +9,17 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/todos'
+    },
+    {
+      path: '/todos',
       name: 'todos',
       component: () => import(/* webpackChunkName: "todo" */ './views/Todo.vue')
+    },
+    {
+      path: '/memos',
+      name: 'memos',
+      component: () => import(/* webpackChunkName: "todo" */ './views/Memo.vue')
     }
     // {
     //   path: '/about',

@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app">
+    <Nav :list="links"></Nav>
     <main class="main">
       <router-view></router-view>
     </main>
@@ -7,11 +8,19 @@
   </div>
 </template>
 <script>
-// import Todo from '@/components/todo/Todo'
+import Nav from '@/components/Nav'
 import './assets/scss/style.scss'
 
 export default {
-  // components: { Todo }
+  components: { Nav },
+  data: () => {
+    return {
+      links: [
+        { link: '/todos', label: '할일목록' },
+        { link: '/memos', label: '메모' }
+      ]
+    }
+  }
 }
 </script>
 

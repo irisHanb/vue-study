@@ -17,7 +17,6 @@
 import Item from '@/components/todo/TodoItem'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import draggable from 'vuedraggable'
-import { constants } from 'crypto'
 
 export default {
   props: ['title', 'list', 'isDone'],
