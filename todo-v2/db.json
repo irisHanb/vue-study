@@ -8,12 +8,12 @@
     {
       "id": 2,
       "text": "22",
-      "done": true
+      "done": false
     },
     {
       "id": 3,
       "text": "333",
-      "done": false
+      "done": true
     }
   ],
   "memos": []

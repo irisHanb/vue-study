@@ -76,6 +76,7 @@ const actions = {
         text: todo.text,
         done: todo.done
       })
+      dispatch(types.GET_TODOS)
     } catch (e) {
       console.log(e)
     }
