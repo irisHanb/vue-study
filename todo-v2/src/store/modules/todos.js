@@ -1,8 +1,7 @@
 import todoApi from '../../api/todoAPI'
 import * as types from './todosType'
-import { async } from 'q'
 
-const dbUrl = 'http://localhost:3000/todos'
+const dbUrl = '/api/todos'
 
 // initial state
 const state = {
