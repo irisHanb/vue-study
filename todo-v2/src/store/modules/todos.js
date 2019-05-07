@@ -1,5 +1,6 @@
 import todoApi from '../../api/todoAPI'
 import * as types from './todosType'
+import { async } from 'q'
 
 const dbUrl = 'http://localhost:3000/todos'
 
@@ -38,27 +39,47 @@ const mutations = {
 //=== actions
 const actions = {
   // get todos
-  [types.GET_TODOS]({ commit }) {
-    todoApi[types.GET_TODOS](todos => commit(types.GET_TODOS, todos))
+  [types.GET_TODOS]: async ({ commit }) => {
+    try {
+      const res = await todoApi.getTodos()
+      commit(types.GET_TODOS, res.data)
+    } catch (e) {
+      console.log(e)
+    }
   },
   // add todo
-  [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
-    console.log(todoText)
+  [types.ADD_TODO]: async ({ state, commit, dispatch }, todoText) => {
     const todo = {
       id: state.id,
       text: todoText,
       done: false
     }
-    todoApi[types.ADD_TODO](todo, () => dispatch(types.GET_TODOS))
+    try {
+      const res = await todoApi[types.ADD_TODO](todo)
+      if (res) dispatch(types.GET_TODOS)
+    } catch (e) {
+      console.log(e)
+    }
   },
   // delete todo
-  [types.DELETE_TODO]({ dispatch }, id) {
-    todoApi[types.DELETE_TODO](id, () => dispatch(types.GET_TODOS))
-  },
-  updateTodo({ state, commit, dispatch }, todo) {
-    todoApi.updateTodo({ id: todo.id, text: todo.text, done: todo.done }, () =>
+  [types.DELETE_TODO]: async ({ dispatch }, id) => {
+    try {
+      await todoApi[types.DELETE_TODO](id)
       dispatch(types.GET_TODOS)
-    )
+    } catch (e) {
+      console.log(e)
+    }
+  },
+  updateTodo: async ({ state, commit, dispatch }, todo) => {
+    try {
+      await todoApi.updateTodo({
+        id: todo.id,
+        text: todo.text,
+        done: todo.done
+      })
+    } catch (e) {
+      console.log(e)
+    }
   },
   applyUpdate({ state, dispatch }) {
     dispatch('updateTodo', state.onDragingTodo)
