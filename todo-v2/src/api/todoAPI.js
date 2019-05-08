@@ -11,10 +11,10 @@ export default {
     return axios.post(apiUrl, todo)
   },
   deleteTodo(id, fn) {
-    return axios.delete(apiUrl + id)
+    return axios.delete(apiUrl + '/' + id)
   },
   updateTodo({ id, text, done }, fn) {
-    return axios.patch(apiUrl + id, {
+    return axios.patch(apiUrl + '/' + id, {
       text,
       done
     })
