@@ -2,11 +2,13 @@
   <div id="app" class="app">
     <Nav :list="links"></Nav>
     <main class="main">
+      <h2></h2>
       <router-view></router-view>
     </main>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import Nav from '@/components/Nav'
 import './assets/scss/style.scss'
 
@@ -15,10 +17,13 @@ export default {
   data: () => {
     return {
       links: [
-        { link: '/todos', label: '할일목록' },
-        { link: '/memos', label: '메모' }
+        { link: '/todos', label: 'TODO' },
+        { link: '/memos', label: 'MEMO' }
       ]
     }
+  },
+  computed: {
+    ...mapState(['viewNum'])
   }
 }
 </script>

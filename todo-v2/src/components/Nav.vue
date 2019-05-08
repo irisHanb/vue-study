@@ -2,14 +2,25 @@
   <div class="nav-wrap">
     <h1>Hello~ Vue!!!</h1>
     <nav class="nav">
-      <router-link v-for="(nav, idx) in list" :key="idx" :to="nav.link">{{nav.label}}</router-link>
+      <router-link
+        v-for="(nav, idx) in list"
+        :key="idx"
+        :to="nav.link"
+        @click.prevent="setViewNum(idx)"
+      >{{nav.label}}</router-link>
     </nav>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
+
 export default {
-  props: ['list']
+  props: ['list'],
+  computed: {},
+  methods: {
+    ...mapMutations(['setViewNum'])
+  }
 }
 </script>
 

@@ -4,17 +4,17 @@ import axios from 'axios'
 const apiUrl = 'http://localhost:3000/memos'
 
 export default {
-  getTodos(fn) {
+  getList() {
     return axios.get(apiUrl)
   },
-  addTodo(todo, fn) {
-    return axios.post(apiUrl, todo)
+  add(data) {
+    return axios.post(apiUrl, data)
   },
-  deleteTodo(id, fn) {
-    return axios.delete(apiUrl + id)
+  delete(id) {
+    return axios.delete(apiUrl + '/' + id)
   },
-  updateTodo({ id, text, done }, fn) {
-    return axios.patch(apiUrl + id, {
+  update({ id, text, done }) {
+    return axios.patch(apiUrl + '/' + id, {
       text,
       done
     })

@@ -2,13 +2,19 @@ import api from '../../api/memoAPI'
 import { async } from 'q'
 
 const uri = '/api/memos'
-const type = {
+const types = {
   getList: 'getList',
   addMemo: 'addMemo'
 }
 
 // state
 const state = {
+  current: {
+    title: null,
+    text: null,
+    
+
+  },
   list: [],
   id: 1
 }
@@ -18,19 +24,48 @@ const getters = {}
 
 // mutations
 const mutations = {
-  [type.getList]: ({ state }) => {}
+  setList(state, list) {
+    state.list = list
+    console.log(state.list)
+  }
 }
 
 // actions
 const actions = {
-  [type.getList]: async () => {
+  async getList({ commit }) {
+    
     try {
+      const res = await api.getList()      
+      commit('setList', res.data)
     } catch (e) {
+      console.log(e)
+    }
+  },
+  async add({commit, dispatch}, data){
+    
+    try{
+      await api.add(data);
+      dispatch('getList')
+      
+    }catch(e){
+      console.log(e)
+      
+    }
+  },
+  async delete({dispatch}, id){
+    try{
+      await api.delete(id)
+      dispatch('getList')
+    }catch(e){
       console.log(e)
     }
   }
 }
 
 export default {
-  namespaced: true
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 }

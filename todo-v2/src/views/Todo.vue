@@ -1,6 +1,6 @@
 <template>
   <div class="todos">
-    <h2>ToDo</h2>
+    <h2>TODO</h2>
     <TodoInput></TodoInput>
     <div class="todos-wrap">
       <TodoList :title="`Have to do`" :list="todosOn" :isDone="false"></TodoList>
@@ -15,26 +15,24 @@ import TodoList from '@/components/todo/TodoList'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
+  components: { TodoInput, TodoList },
   data() {
     return {}
   },
   computed: {
-    ...mapState('todos', {
-      todos: 'list'
+    ...mapState({
+      todos: 'todos/list'
     }),
-    ...mapGetters('todos', {
-      todosOn: 'listOn',
-      todosDone: 'listDone'
+    ...mapGetters({
+      todosOn: 'todos/listOn',
+      todosDone: 'todos/listDone'
     })
   },
-
-  components: { TodoInput, TodoList },
   created() {
     this.getTodos()
-    // console.log(JSON.stringify(this.todos))
   },
   methods: {
-    ...mapActions('todos', ['getTodos'])
+    ...mapActions({ getTodos: 'todos/getTodos' })
   }
 }
 </script>

@@ -1,23 +1,43 @@
+
 <template>
+  <!-- list component 없이 진행해 봄 -->
   <div>
-    <MemoInput></MemoInput>
-    <Memo></Memo>
+    <MemoInput/>
+    <ul class="memos">
+      <Memo v-for="item in list" :key="item.id" :memoItem="item"></Memo>
+    </ul>
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import MemoInput from '@/components/memo/MemoInput'
 import Memo from '@/components/memo/MemoItem'
+import { constants } from 'crypto'
 
 export default {
   components: { MemoInput, Memo },
-  created() {},
+
+  created() {
+    this.getList()
+  },
+  computed: {
+    ...mapState('memos', { list: 'list' })
+    // ...mapState({ list: 'memos/list' }) // Q: 이건 왜 않될까? todo 에서는 이렇게 참조했는데...
+  },
   methods: {
-    ...mapState('memos', ['getList'])
+    ...mapActions({ getList: 'memos/getList' })
   }
 }
 </script>
+<style lang="scss" scoped>
+.memos {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;  
+}
+</style>
+
 
 
 

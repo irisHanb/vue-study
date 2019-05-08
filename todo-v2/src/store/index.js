@@ -10,8 +10,15 @@ export default new Vuex.Store({
     todos,
     memos
   },
-  state: {},
+  state: {
+    viewNum: 0
+  },
   getters: {},
-  mutations: {},
+  mutations: {
+    setViewNum({ state }, num) {
+      console.log(num)
+      state.viewNum = num
+    }
+  },
   actions: {}
 })

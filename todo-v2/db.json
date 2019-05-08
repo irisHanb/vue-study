@@ -1,13 +1,15 @@
 {
-  "todos": [],
-  "memos": [
+  "todos": [
     {
       "id": 1,
-      "text": "first"
+      "text": "333",
+      "done": false
     },
     {
       "id": 2,
-      "text": "second"
+      "text": "222",
+      "done": false
     }
-  ]
+  ],
+  "memos": []
 }
