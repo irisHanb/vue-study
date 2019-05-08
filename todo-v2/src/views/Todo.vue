@@ -41,7 +41,6 @@ export default {
 <style lang="scss">
 .todos {
   padding: 1.5em;
-  background: #fff9db;
   h2 {
     padding: 1em;
     text-align: center;

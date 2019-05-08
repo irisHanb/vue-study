@@ -4,7 +4,6 @@
     <main class="main">
       <router-view></router-view>
     </main>
-    <!-- <Todo></Todo> -->
   </div>
 </template>
 <script>
@@ -25,10 +24,17 @@ export default {
 </script>
 
 <style lang="scss">
-.main {
+.app {
   max-width: 1000px;
-  min-width: 500px;
-  outline: 1px dotted red;
   margin: 0 auto;
+  padding-top: 3em;
+}
+.main {
+  padding: 10px;
+  margin: 10px;
+  min-height: 90vh;
+
+  background-color: #f5e1da;
+  // outline: 1px dotted red;
 }
 </style>
