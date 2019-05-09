@@ -9,10 +9,7 @@ const types = {
 
 // state
 const state = {
-  current: {
-    title: null,
-    text: null
-  },
+  current: null,
   onEdit: false, // memo 한거 편집중일때
   onWrite: false, // memo 작성 중 일때
   list: [],
@@ -31,6 +28,17 @@ const mutations = {
   setOnEdit(state, bool) {
     console.log(bool)
     state.onEdit = bool
+  },
+  setEditItem: (state, item) => {
+    if (state.current) {
+      state.current.onEdit = false
+      state.current = null
+    }
+    state.current = item
+    item.onEdit = true
+
+    // state.current = { ...item }
+    // this.$store.commit('setOnEdit', true)
   }
 }
 

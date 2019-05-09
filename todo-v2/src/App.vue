@@ -1,13 +1,12 @@
 <template>
   <div id="app" class="app">
-    <button @click="toggleOnEdit">toggle Edit</button>
     <Nav :list="links"></Nav>
     <main class="main">
       <h2 class="comp__title">{{toolName}}</h2>
       <router-view></router-view>
     </main>
     <transition name="fade">
-      <div class="app__dimmed" v-show="onEdit"></div>
+      <div class="app__dimmed" v-show="onEdit" @click="toggleOnEdit"></div>
     </transition>
   </div>
 </template>
@@ -31,10 +30,14 @@ export default {
     this.setToolName('todo')
   },
   computed: {
-    ...mapState({
-      memoOnEdit: 'memos/onEdit',
-      toolName: 'toolName'
-    }),
+    // 각 namespace별로 분리해서 참조해준다.
+    ...mapState(['toolName']),
+    ...mapState('memos', { memoOnEdit: 'onEdit' }),
+    // Q: 여전히... 않된당... ㅜㅜ
+    // ...mapState({
+    //   memoOnEdit: 'memos/onEdit'
+    // }),
+
     onEdit: {
       get() {
         return this.memoOnEdit
@@ -71,7 +74,7 @@ export default {
     bottom: 0;
     left: 0;
     background-color: #424949;
-    // opacity: 0.7;
+    opacity: 0.7;
 
     &.fade-enter-active,
     .fade-leave-active {

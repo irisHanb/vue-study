@@ -16,13 +16,15 @@
       "title": "title2",
       "text": "내용2",
       "onFix": false,
-      "id": 1
+      "id": 1,
+      "onEdit": false
     },
     {
       "title": "dafasd",
       "text": "adf",
       "onFix": false,
-      "id": 2
+      "id": 2,
+      "onEdit": false
     }
   ]
 }

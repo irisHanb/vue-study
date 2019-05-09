@@ -1,5 +1,9 @@
 <template>
-  <div class="memo" :class="[{'fix': item.onFix, 'onEdit': onEdit}]" @click="changeModeEdit">
+  <div
+    class="memo"
+    :class="[{'fix': item.onFix, 'onEdit': item.onEdit}]"
+    @click.prevent="changeModeEdit"
+  >
     <div class="memo__header">
       <div v-if="item.title" class="memo__title">{{item.title}}</div>
     </div>
@@ -18,19 +22,28 @@ export default {
   props: ['memoItem'],
   data: () => {
     return {
-      item: null,
-      onEdit: false
+      item: null
+      // onEdit: false
+      // onEdit: false
     }
   },
   created() {
     this.item = { ...this.memoItem }
+    // this.onEdit = this.memoOnEdit
+  },
+  computed: {
+    // ...mapState('memos', { memoOnEdit: 'onEdit' })
   },
   methods: {
+    ...mapMutations({
+      setOnEdit: 'memos/setOnEdit',
+      setEditMode: 'memos/setEditItem'
+    }),
     ...mapActions({
       del: 'memos/delete'
     }),
     changeModeEdit() {
-      this.onEdit = true
+      this.setEditMode(this.item)
     }
   }
 }
@@ -46,7 +59,7 @@ export default {
   border-radius: 0.3em;
   border: 1px solid #f1f1f1;
 
-  transition: all 0.3s ease-in-out;
+  transition: all 0.5s ease-in-out;
   &__title {
     font-weight: 700;
   }
@@ -65,11 +78,12 @@ export default {
 
   &.onEdit {
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 50%;
     transform: translateX(-50%);
 
-    width: 600px;
+    width: 500px;
+    z-index: 1;
   }
 }
 </style>
