@@ -28,7 +28,7 @@ export default {
   },
   created() {
     // 시작시 처음은 todo
-    this.$store.commit('setToolName', 'todo')
+    this.setToolName('todo')
   },
   computed: {
     ...mapState({
@@ -47,7 +47,8 @@ export default {
 
   methods: {
     ...mapMutations({
-      setOnEdit: 'memos/setOnEdit'
+      setOnEdit: 'memos/setOnEdit',
+      setToolName: 'setToolName'
     }),
 
     toggleOnEdit() {
