@@ -1,6 +1,5 @@
 <template>
   <div class="comp todos">
-    <h2 class="comp__title">TODO</h2>
     <TodoInput></TodoInput>
     <div class="todos-wrap">
       <TodoList :title="`Have to do`" :list="todosOn" :isDone="false"></TodoList>

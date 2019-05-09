@@ -2,7 +2,6 @@
 <template>
   <!-- list component 없이 진행해 봄 -->
   <div class="comp">
-    <h2 class="comp__title">MEMO</h2>
     <MemoInput/>
     <ul class="memos">
       <Memo v-for="item in list" :key="item.id" :memoItem="item"></Memo>

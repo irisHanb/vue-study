@@ -3,11 +3,11 @@
     <h1>Hello~ Vue!!!</h1>
     <nav class="nav">
       <router-link
+        @click.native="setToolName(nav.title)"
         v-for="(nav, idx) in list"
         :key="idx"
         :to="nav.link"
-        @click.prevent="setViewNum(idx)"
-      >{{nav.label}}</router-link>
+      >{{nav.title}}</router-link>
     </nav>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
   props: ['list'],
   computed: {},
   methods: {
-    ...mapMutations(['setViewNum'])
+    ...mapMutations(['setToolName'])
   }
 }
 </script>
@@ -43,6 +43,7 @@ h1 {
     background-color: #085f63;
     opacity: 0.5;
     color: #fff;
+    text-transform: uppercase;
 
     &:first-child {
       margin-right: 10px;

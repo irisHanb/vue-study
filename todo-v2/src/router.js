@@ -9,23 +9,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/todos'
+      redirect: { name: 'todos' }
     },
     {
       path: '/todos',
       name: 'todos',
-      component: () => import(/* webpackChunkName: "todo" */ './views/Todo.vue')
+      component: () =>
+        import(/* webpackChunkName: "todo" */ './components/todo/Todo.vue')
     },
     {
       path: '/memos',
       name: 'memos',
-      component: () => import(/* webpackChunkName: "todo" */ './views/Memo.vue')
+      component: () =>
+        import(/* webpackChunkName: "memo" */ './components/memo/Memo.vue')
     }
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   component: () =>
-    //     import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
   ]
 })

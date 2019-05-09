@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="app">
-    <button @click="toggleOnEdit">toggle Edit</button>
+    <!-- <button @click="toggleOnEdit">toggle Edit</button> -->
     <Nav :list="links"></Nav>
     <main class="main">
-      <h2></h2>
+      <h2 class="comp__title">{{toolName}}</h2>
       <router-view></router-view>
     </main>
     <transition name="fade">
@@ -15,22 +15,25 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import Nav from '@/components/Nav'
 import './assets/scss/style.scss'
-import { constants } from 'crypto'
 
 export default {
   components: { Nav },
   data: () => {
     return {
       links: [
-        { link: '/todos', label: 'TODO' },
-        { link: '/memos', label: 'MEMO' }
+        { link: '/todos', title: 'todo' },
+        { link: '/memos', title: 'memo' }
       ]
     }
+  },
+  created() {
+    // 시작시 처음은 todo
+    this.$store.commit('setToolName', 'todo')
   },
   computed: {
     ...mapState({
       memoOnEdit: 'memos/onEdit',
-      toolNum: 'toolNum'
+      toolName: 'toolName'
     }),
     onEdit: {
       get() {
@@ -41,10 +44,12 @@ export default {
       }
     }
   },
+
   methods: {
     ...mapMutations({
       setOnEdit: 'memos/setOnEdit'
     }),
+
     toggleOnEdit() {
       this.onEdit = !this.onEdit
       console.log('>> ', this.onEdit)
@@ -83,5 +88,8 @@ export default {
 
   background-color: #f5e1da;
   // outline: 1px dotted red;
+  .comp__title {
+    text-transform: uppercase;
+  }
 }
 </style>

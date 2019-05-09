@@ -11,13 +11,13 @@ export default new Vuex.Store({
     memos
   },
   state: {
-    toolNum: 0 // 0: tood, 1: memo
+    toolName: '' // todo 부터~
   },
   getters: {},
   mutations: {
-    setViewNum({ state }, num) {
-      console.log(num)
-      state.viewNum = num
+    setToolName(state, name) {
+      console.log(name)
+      state.toolName = name
     }
   },
   actions: {}
