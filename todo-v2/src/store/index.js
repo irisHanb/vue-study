@@ -11,7 +11,7 @@ export default new Vuex.Store({
     memos
   },
   state: {
-    viewNum: 0
+    toolNum: 0 // 0: tood, 1: memo
   },
   getters: {},
   mutations: {

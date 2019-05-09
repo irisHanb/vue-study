@@ -11,10 +11,10 @@ const types = {
 const state = {
   current: {
     title: null,
-    text: null,
-    
-
+    text: null
   },
+  onEdit: false, // memo 한거 편집중일때
+  onWrite: false, // memo 작성 중 일때
   list: [],
   id: 1
 }
@@ -27,36 +27,36 @@ const mutations = {
   setList(state, list) {
     state.list = list
     console.log(state.list)
+  },
+  setOnEdit(state, bool) {
+    console.log(bool)
+    state.onEdit = bool
   }
 }
 
 // actions
 const actions = {
   async getList({ commit }) {
-    
     try {
-      const res = await api.getList()      
+      const res = await api.getList()
       commit('setList', res.data)
     } catch (e) {
       console.log(e)
     }
   },
-  async add({commit, dispatch}, data){
-    
-    try{
-      await api.add(data);
+  async add({ commit, dispatch }, data) {
+    try {
+      await api.add(data)
       dispatch('getList')
-      
-    }catch(e){
+    } catch (e) {
       console.log(e)
-      
     }
   },
-  async delete({dispatch}, id){
-    try{
+  async delete({ dispatch }, id) {
+    try {
       await api.delete(id)
       dispatch('getList')
-    }catch(e){
+    } catch (e) {
       console.log(e)
     }
   }

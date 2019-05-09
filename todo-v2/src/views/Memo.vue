@@ -1,7 +1,8 @@
 
 <template>
   <!-- list component 없이 진행해 봄 -->
-  <div>
+  <div class="comp">
+    <h2 class="comp__title">MEMO</h2>
     <MemoInput/>
     <ul class="memos">
       <Memo v-for="item in list" :key="item.id" :memoItem="item"></Memo>
@@ -34,7 +35,7 @@ export default {
 .memos {
   display: flex;
   justify-content: flex-start;
-  flex-wrap: wrap;  
+  flex-wrap: wrap;
 }
 </style>
 

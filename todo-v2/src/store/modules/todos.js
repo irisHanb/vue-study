@@ -36,7 +36,7 @@ const mutations = {
 //=== actions
 const actions = {
   // get todos
-  [types.GET_TODOS]: async ({ commit }) => {     
+  async [types.GET_TODOS]({ commit }) {
     try {
       const res = await todoApi.getTodos()
       commit(types.GET_TODOS, res.data)
@@ -45,7 +45,7 @@ const actions = {
     }
   },
   // add todo
-  [types.ADD_TODO]: async ({ state, commit, dispatch }, todoText) => {
+  async [types.ADD_TODO]({ state, commit, dispatch }, todoText) {
     const todo = {
       id: state.id,
       text: todoText,
@@ -59,7 +59,7 @@ const actions = {
     }
   },
   // delete todo
-  [types.DELETE_TODO]: async ({ dispatch }, id) => {
+  async [types.DELETE_TODO]({ dispatch }, id) {
     try {
       await todoApi[types.DELETE_TODO](id)
       dispatch(types.GET_TODOS)
@@ -67,7 +67,7 @@ const actions = {
       console.log(e)
     }
   },
-  updateTodo: async ({ state, commit, dispatch }, todo) => {
+  async updateTodo({ state, commit, dispatch }, todo) {
     try {
       await todoApi.updateTodo({
         id: todo.id,

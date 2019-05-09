@@ -2,3 +2,13 @@ html,
 body {
   height: 100%;
 }
+
+// component
+.comp {
+  &__title {
+    padding: 1em;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
