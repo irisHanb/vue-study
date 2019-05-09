@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app">
-    <!-- <button @click="toggleOnEdit">toggle Edit</button> -->
+    <button @click="toggleOnEdit">toggle Edit</button>
     <Nav :list="links"></Nav>
     <main class="main">
       <h2 class="comp__title">{{toolName}}</h2>
