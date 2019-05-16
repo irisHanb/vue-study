@@ -11,20 +11,5 @@
       "done": false
     }
   ],
-  "memos": [
-    {
-      "title": "title2",
-      "text": "내용2",
-      "onFix": false,
-      "id": 1,
-      "onEdit": false
-    },
-    {
-      "title": "dafasd",
-      "text": "adf",
-      "onFix": false,
-      "id": 2,
-      "onEdit": false
-    }
-  ]
+  "memos": []
 }

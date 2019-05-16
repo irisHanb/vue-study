@@ -11,6 +11,7 @@ export default new Vuex.Store({
     memos
   },
   state: {
+    memoOnEdit: false,
     toolName: '' // todo 부터~
   },
   getters: {},

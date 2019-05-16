@@ -5,9 +5,6 @@
       <h2 class="comp__title">{{toolName}}</h2>
       <router-view></router-view>
     </main>
-    <transition name="fade">
-      <div class="app__dimmed" v-show="onEdit" @click="toggleOnEdit"></div>
-    </transition>
   </div>
 </template>
 <script>
@@ -19,6 +16,7 @@ export default {
   components: { Nav },
   data: () => {
     return {
+      memoStatus: null,
       links: [
         { link: '/todos', title: 'todo' },
         { link: '/memos', title: 'memo' }
@@ -26,12 +24,14 @@ export default {
     }
   },
   created() {
+    this.memoStatus = this.memoOnEdit
+
     // 시작시 처음은 todo
     this.setToolName('todo')
   },
   computed: {
     // 각 namespace별로 분리해서 참조해준다.
-    ...mapState(['toolName']),
+    ...mapState(['toolName', 'memoOnEdit']),
     ...mapState('memos', { memoOnEdit: 'onEdit' }),
     // Q: 여전히... 않된당... ㅜㅜ
     // ...mapState({
@@ -54,9 +54,10 @@ export default {
       setToolName: 'setToolName'
     }),
 
+    // memo 일때 edit memo UI 보이게 하기
     toggleOnEdit() {
-      this.onEdit = !this.onEdit
-      console.log('>> ', this.onEdit)
+      if (this.toolName != 'memo') return
+      this.memoStatus = !this.memoStatus
     }
   }
 }
@@ -67,23 +68,6 @@ export default {
   max-width: 1000px;
   margin: 0 auto;
   padding-top: 3em;
-  &__dimmed {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #424949;
-    opacity: 0.7;
-
-    &.fade-enter-active,
-    .fade-leave-active {
-      transition: opacity 0.5s;
-    }
-    &.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-      opacity: 0;
-    }
-  }
 }
 .main {
   padding: 10px;

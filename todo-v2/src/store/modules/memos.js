@@ -1,6 +1,13 @@
 import api from '../../api/memoAPI'
 import { async } from 'q'
 
+/****
+ * creaet: add
+ * read: show
+ * update: update
+ * delete: delete
+ */
+
 const uri = '/api/memos'
 const types = {
   getList: 'getList',
@@ -9,11 +16,14 @@ const types = {
 
 // state
 const state = {
-  current: null,
-  onEdit: false, // memo 한거 편집중일때
-  onWrite: false, // memo 작성 중 일때
   list: [],
-  id: 1
+  idNext: 1,
+  onPending: false,
+
+  current: null, // 현재 선택된 memo
+  mode: null, // edit
+  onEdit: false, // memo 한거 편집중일때
+  onWrite: false // memo 작성 중 일때
 }
 
 // getters
@@ -21,9 +31,21 @@ const getters = {}
 
 // mutations
 const mutations = {
+  // 현재 선택한 메모
+  setCurrent(state, memo) {
+    if (state.current) state.current = null
+    state.current = memo
+    state.mode = 'edit'
+    // console.log('current', state.current.id, state.mode)
+  },
+  changeMode(state, mode) {
+    state.mode = mode
+  },
+  // 받아온 list 저장
   setList(state, list) {
     state.list = list
-    console.log(state.list)
+    state.idNext = state.list.length + 1
+    state.onPending = false
   },
   setOnEdit(state, bool) {
     console.log(bool)
@@ -36,9 +58,6 @@ const mutations = {
     }
     state.current = item
     item.onEdit = true
-
-    // state.current = { ...item }
-    // this.$store.commit('setOnEdit', true)
   }
 }
 
@@ -52,8 +71,11 @@ const actions = {
       console.log(e)
     }
   },
+
+  // create: add
   async add({ commit, dispatch }, data) {
     try {
+      console.log(data)
       await api.add(data)
       dispatch('getList')
     } catch (e) {
@@ -67,6 +89,10 @@ const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+  update({ commit, dispatch }) {
+    console.log('fnupdate')
+    commit('changeMode', '')
   }
 }
 

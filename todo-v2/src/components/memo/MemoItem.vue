@@ -1,17 +1,23 @@
 <template>
-  <div
-    class="memo"
-    :class="[{'fix': item.onFix, 'onEdit': item.onEdit}]"
-    @click.prevent="changeModeEdit"
-  >
-    <div class="memo__header">
+  <div class="memo memo-item" :class="[{'fix': item.onFix, 'onEdit': item.onEdit}]">
+    <div class="memo-item__header">
       <div v-if="item.title" class="memo__title">{{item.title}}</div>
+      <!-- <div class="memo__btns">
+        <button @click="close">
+          <i class="fas fa-times-circle"></i>
+        </button>
+      </div>-->
     </div>
-    <div class="memo__text">{{item.text}}</div>
-    <div class="memo__btns">
-      <button @click="del(item.id)">
-        <i class="fas fa-trash-alt"></i>
-      </button>
+    <div class="memo-item__body">{{item.text}}</div>
+    <div class="memo-item__footer">
+      <div class="memo__btns">
+        <!-- <button @click="add(item.id)">
+          <i class="fas fa-plus-circle"></i>
+        </button>-->
+        <button @click="deleteItem(item.id)">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -23,55 +29,35 @@ export default {
   data: () => {
     return {
       item: null
-      // onEdit: false
-      // onEdit: false
     }
   },
   created() {
-    this.item = { ...this.memoItem }
-    // this.onEdit = this.memoOnEdit
+    this.item = { ...this.memoItem } //
   },
   computed: {
-    // ...mapState('memos', { memoOnEdit: 'onEdit' })
+    // ...mapState('memos', ['mode'])
   },
   methods: {
-    ...mapMutations({
-      setOnEdit: 'memos/setOnEdit',
-      setEditMode: 'memos/setEditItem'
-    }),
-    ...mapActions({
-      del: 'memos/delete'
-    }),
+    ...mapMutations('memos', ['setCurrent', 'setOnEdit', 'setEditItem']),
+    ...mapActions('memos', { deleteItem: 'delete' }),
     changeModeEdit() {
       this.setEditMode(this.item)
-    }
+    },
+    // item 닫기
+    close() {}
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .memo {
-  width: 200px;
-  padding: 1em;
-  margin: 0.5em;
-
-  background-color: #fff;
-  border-radius: 0.3em;
-  border: 1px solid #f1f1f1;
-
+  width: 300px;
   transition: all 0.5s ease-in-out;
+
   &__title {
     font-weight: 700;
   }
-  &__text {
-    margin-top: 1em;
-    font-size: 13px;
-  }
-  &__btns {
-    border-top: 1px solid #f1f1f1;
-    padding-top: 1em;
-    margin-top: 1em;
-  }
+
   &.fix {
     background-color: #ff0;
   }
