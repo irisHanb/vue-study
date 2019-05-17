@@ -18,9 +18,17 @@ yarn run serve
 yarn run db
 ```
 
+### 사용 기술
+
+- vue
+- vue cli
+- router
+- vuex
+- scss
+
 ### 기능
 
-#### todo list
+> todo list
 
 - add
 - delete
@@ -28,7 +36,7 @@ yarn run db
 - drag and drop
 - check done
 
-#### memo list
+> memo list
 
 - add
 - delete
