@@ -1,29 +1,39 @@
 # todo-v2
 
 ## Project setup
+
 ```
 yarn install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
 yarn run serve
 ```
 
-### Compiles and minifies for production
+### local json-server 사용
+
 ```
-yarn run build
+yarn run db
 ```
 
-### Run your tests
-```
-yarn run test
-```
+### 기능
 
-### Lints and fixes files
-```
-yarn run lint
-```
+#### todo list
+
+- add
+- delete
+- edit
+- drag and drop
+- check done
+
+#### memo list
+
+- add
+- delete
+- edit
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
