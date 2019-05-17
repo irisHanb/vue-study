@@ -32,25 +32,24 @@ export default {
   computed: {
     // 각 namespace별로 분리해서 참조해준다.
     ...mapState(['toolName', 'memoOnEdit']),
-    ...mapState('memos', { memoOnEdit: 'onEdit' }),
+    ...mapState('memos', { memoOnEdit: 'onEdit' })
     // Q: 여전히... 않된당... ㅜㅜ
     // ...mapState({
     //   memoOnEdit: 'memos/onEdit'
     // }),
 
-    onEdit: {
-      get() {
-        return this.memoOnEdit
-      },
-      set(bool) {
-        this.setOnEdit(bool)
-      }
-    }
+    // onEdit: {
+    //   get() {
+    //     return this.memoOnEdit
+    //   },
+    //   set(bool) {
+    //     this.setOnEdit(bool)
+    //   }
   },
 
   methods: {
     ...mapMutations({
-      setOnEdit: 'memos/setOnEdit',
+      // setOnEdit: 'memos/setOnEdit',
       setToolName: 'setToolName'
     }),
 

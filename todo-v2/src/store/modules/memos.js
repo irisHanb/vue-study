@@ -16,14 +16,12 @@ const types = {
 
 // state
 const state = {
-  list: [],
-  idNext: 1,
-  onPending: false,
+  list: [], // memo list
+  idNext: 1, // will give id
 
-  current: null, // 현재 선택된 memo
-  mode: null, // edit
-  onEdit: false, // memo 한거 편집중일때
-  onWrite: false // memo 작성 중 일때
+  // 편집관련
+  onEditItem: null,
+  onEdit: false // memo 한거 편집중일때
 }
 
 // getters
@@ -31,33 +29,26 @@ const getters = {}
 
 // mutations
 const mutations = {
-  // 현재 선택한 메모
-  setCurrent(state, memo) {
-    if (state.current) state.current = null
-    state.current = memo
-    state.mode = 'edit'
-    // console.log('current', state.current.id, state.mode)
+  //=== 편집
+  // 현재 편집중인 memo 내용 업데이트
+  updateCurrent(state, item) {
+    state.onEditItem = item
   },
-  changeMode(state, mode) {
-    state.mode = mode
+  // 편집중인 메모 설정
+  changeEditMode(state, item) {
+    item.onEdit = true
+    console.log(item.id, item.title, item.text)
+    state.onEdit = true
+    state.onEditItem = item
   },
+
   // 받아온 list 저장
   setList(state, list) {
     state.list = list
-    state.idNext = state.list.length + 1
-    state.onPending = false
-  },
-  setOnEdit(state, bool) {
-    console.log(bool)
-    state.onEdit = bool
-  },
-  setEditItem: (state, item) => {
-    if (state.current) {
-      state.current.onEdit = false
-      state.current = null
-    }
-    state.current = item
-    item.onEdit = true
+    state.idNext = Math.max(state.list.map(el => el.id)) + 1
+    // 초기화( 이 시점이 맞는거 같음)
+    state.onEdit = false
+    state.onEditItem = null
   }
 }
 
@@ -90,9 +81,14 @@ const actions = {
       console.log(e)
     }
   },
-  update({ commit, dispatch }) {
-    console.log('fnupdate')
-    commit('changeMode', '')
+  async update({ commit, dispatch }, item) {
+    try {
+      console.log('update>>> ', item)
+      await api.update(item)
+      dispatch('getList')
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
 

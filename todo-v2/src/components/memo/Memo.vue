@@ -9,12 +9,13 @@
       <Memo v-for="item in list" :key="item.id" :memoItem="item"></Memo>
     </ul>
     <transition name="fade">
-      <div class="memo__dimmed" v-show="mode == 'edit'" @click="update"></div>
+      <div class="memo__dimmed" v-show="onEdit" @click="updateItem(onEditItem)"></div>
     </transition>
   </div>
 </template>
+
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 import MemoInput from '@/components/memo/MemoInput'
 import Memo from '@/components/memo/MemoItem'
@@ -26,11 +27,11 @@ export default {
     this.getList()
   },
   computed: {
-    ...mapState('memos', ['list', 'mode'])
-    // ...mapState({ list: 'memos/list' }) // Q: 이건 왜 않될까? todo 에서는 이렇게 참조했는데...
+    ...mapState('memos', ['list', 'onEdit', 'onEditItem'])
   },
   methods: {
-    ...mapActions('memos', ['getList', 'update'])
+    ...mapMutations('memos', ['changeEditMode']),
+    ...mapActions('memos', { getList: 'getList', updateItem: 'update' })
   }
 }
 </script>
@@ -58,7 +59,7 @@ export default {
   background: rgba(0, 0, 0, 0.3);
   &.fade-enter-active,
   .fade-leave-active {
-    transition: opacity 0.5s;
+    transition: opacity 0.3s;
   }
   &.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
     opacity: 0;

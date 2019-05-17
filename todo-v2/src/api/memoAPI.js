@@ -13,10 +13,11 @@ export default {
   delete(id) {
     return axios.delete(apiUrl + '/' + id)
   },
-  update({ id, text, done }) {
+  update({ id, title, text, onFix }) {
     return axios.patch(apiUrl + '/' + id, {
+      title,
       text,
-      done
+      onFix
     })
   }
 }

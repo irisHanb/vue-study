@@ -1,20 +1,16 @@
 <template>
-  <div class="memo memo-item" :class="[{'fix': item.onFix, 'onEdit': item.onEdit}]">
+  <div class="memo memo-item" :class="[{'onEdit': memoItem.onEdit}]" @click="onEditMode">
     <div class="memo-item__header">
-      <div v-if="item.title" class="memo__title">{{item.title}}</div>
-      <!-- <div class="memo__btns">
-        <button @click="close">
-          <i class="fas fa-times-circle"></i>
-        </button>
-      </div>-->
+      <div
+        class="memo-item__title memo__title"
+        :contenteditable="onEdit"
+        @input="updateTitle"
+      >{{memoItem.title}}</div>
     </div>
-    <div class="memo-item__body">{{item.text}}</div>
+    <div class="memo-item__body" :contenteditable="onEdit" @input="updateText">{{memoItem.text}}</div>
     <div class="memo-item__footer">
       <div class="memo__btns">
-        <!-- <button @click="add(item.id)">
-          <i class="fas fa-plus-circle"></i>
-        </button>-->
-        <button @click="deleteItem(item.id)">
+        <button @click="deleteItem(memoItem.id)" v-show="!memoItem.onEdit">
           <i class="fas fa-trash-alt"></i>
         </button>
       </div>
@@ -23,27 +19,46 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-
+import { constants } from 'crypto'
 export default {
   props: ['memoItem'],
   data: () => {
     return {
-      item: null
+      // item: null
+      // onEdit: false
     }
   },
   created() {
-    this.item = { ...this.memoItem } //
+    // this.item = { ...this.memoItem } //
   },
   computed: {
-    // ...mapState('memos', ['mode'])
+    ...mapState('memos', ['onEdit', 'onEditItem'])
   },
   methods: {
-    ...mapMutations('memos', ['setCurrent', 'setOnEdit', 'setEditItem']),
-    ...mapActions('memos', { deleteItem: 'delete' }),
-    changeModeEdit() {
-      this.setEditMode(this.item)
+    ...mapMutations('memos', ['changeEditMode', 'updateCurrent']),
+    ...mapActions('memos', { deleteItem: 'delete', updateItem: 'update' }),
+
+    updateTitle(e) {
+      this.updateCurrent({ ...this.memoItem, title: e.target.innerText })
     },
-    // item 닫기
+    updateText(e) {
+      this.updateCurrent({ ...this.memoItem, text: e.target.innerText })
+    },
+    updateEditMode(bool) {
+      this.updateCurrent({ ...this.memoItem, onEdit: bool })
+    },
+
+    // 편집모드로 전환
+    onEditMode(e) {
+      if (e.target.tagName != 'DIV') return
+      this.updateEditMode(true)
+      this.changeEditMode(this.memoItem)
+    },
+
+    updateContents() {
+      this.updateItem({ ...this.onEditItem })
+      // this.editMode = false
+    },
     close() {}
   }
 }

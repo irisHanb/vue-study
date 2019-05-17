@@ -45,6 +45,7 @@ export default {
         id: this.id,
         title: this.$refs.title.innerText,
         text: this.$refs.text.innerText,
+        onEdit: false,
         onFix: false
       }
       this.add(data)
