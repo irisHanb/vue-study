@@ -1,20 +1,21 @@
 <template>
   <div class="memo-item">
     <div class="memo-item__header">
-      <div class="memo-item__title" contenteditable="true" placeholder="제목을 입력해주세요." ref="title"></div>
-      <!-- <div class="memo-item__btns">
-        <button>
-          <i class="fas fa-times-circle"></i>
-        </button>
-      </div>-->
+      <div
+        class="memo-item__title"
+        contenteditable="true"
+        placeholder="제목을 입력해주세요."
+        ref="addItemTitle"
+        @input="updateTitle"
+      >{{title}}</div>
     </div>
     <div
       class="memo-item__body"
-      ref="text"
       contenteditable="true"
-      aria-multiline="true"
       placeholder="메모내용을 입력해주세요."
-    ></div>
+      ref="addItemText"
+      @input="updateText"
+    >{{text}}</div>
     <div class="memo-item__footer">
       <div class="memo-item__btns">
         <!-- add -->
@@ -27,6 +28,7 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { constants } from 'crypto'
 export default {
   data: () => {
     return {}
@@ -35,22 +37,44 @@ export default {
   created() {},
 
   computed: {
-    ...mapState('memos', { id: 'idNext' })
+    ...mapState('memos', { id: 'idNext' }),
+    title: {
+      get() {
+        this.$refs.addItemTitle
+      },
+      set(st) {
+        this.$refs.addItemTitle.innerText = st
+      }
+    },
+    text: {
+      get() {
+        this.$refs.addItemText
+      },
+      set(st) {
+        this.$refs.addItemText.innerText = st
+      }
+    }
   },
 
   methods: {
     ...mapActions('memos', ['add']),
+    updateTitle(e) {
+      this.title = e.target.innerText
+    },
+    updateText(e) {
+      this.text = e.target.innerText
+    },
     addMemo() {
       const data = {
         id: this.id,
-        title: this.$refs.title.innerText,
-        text: this.$refs.text.innerText,
+        title: this.title,
+        text: this.text,
         onEdit: false,
         onFix: false
       }
       this.add(data)
-      this.$refs.title.innerText = ''
-      this.$refs.text.innerText = ''
+      this.title = ''
+      this.text = ''
     }
   }
 }
