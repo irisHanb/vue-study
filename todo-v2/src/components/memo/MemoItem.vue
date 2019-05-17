@@ -1,5 +1,9 @@
 <template>
-  <div class="memo memo-item" :class="[{'onEdit': memoItem.onEdit}]" @click="onEditMode">
+  <div
+    class="memo memo-item"
+    :class="[{'onEdit': editMode && memoItem.onEdit, 'onRead': !editMode && memoItem.onEdit}]"
+    @click="onEditMode"
+  >
     <div class="memo-item__header">
       <div
         class="memo-item__title memo__title"
@@ -19,18 +23,13 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { constants } from 'crypto'
+
 export default {
-  props: ['memoItem'],
+  props: ['memoItem', 'editMode'],
   data: () => {
-    return {
-      // item: null
-      // onEdit: false
-    }
+    return {}
   },
-  created() {
-    // this.item = { ...this.memoItem } //
-  },
+  created() {},
   computed: {
     ...mapState('memos', ['onEdit', 'onEditItem'])
   },
@@ -67,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .memo {
   width: 300px;
-  transition: all 0.5s ease-in-out;
+  // transition: all 0.2s ease-in-out;
 
   &__title {
     font-weight: 700;
@@ -78,6 +77,7 @@ export default {
   }
 
   &.onEdit {
+    // opacity: 0.5;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -85,6 +85,9 @@ export default {
 
     width: 500px;
     z-index: 1;
+  }
+  &.onRead {
+    opacity: 0.1;
   }
 }
 </style>

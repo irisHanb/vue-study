@@ -6,8 +6,11 @@
       <MemoInput/>
     </div>
     <ul class="memo-list">
-      <Memo v-for="item in list" :key="item.id" :memoItem="item"></Memo>
+      <Memo v-for="item in list" :key="item.id" :memoItem="item" :editMode="false"></Memo>
     </ul>
+    <transition name="fade">
+      <Memo v-if="onEditItem" :memoItem="onEditItem" :editMode="true"></Memo>
+    </transition>
     <transition name="fade">
       <div class="memo__dimmed" v-show="onEdit" @click="updateItem(onEditItem)"></div>
     </transition>

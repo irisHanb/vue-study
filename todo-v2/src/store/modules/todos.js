@@ -21,7 +21,6 @@ const getters = {
 // mutations
 const mutations = {
   [types.GET_TODOS](state, todos) {
-    console.log('get todos...')
     state.list = [...todos]
     state.id = ++todos.length
     state.txt = ''

@@ -10,16 +10,8 @@ export default new Vuex.Store({
     todos,
     memos
   },
-  state: {
-    memoOnEdit: false,
-    toolName: '' // todo 부터~
-  },
+  state: {},
   getters: {},
-  mutations: {
-    setToolName(state, name) {
-      console.log(name)
-      state.toolName = name
-    }
-  },
+  mutations: {},
   actions: {}
 })

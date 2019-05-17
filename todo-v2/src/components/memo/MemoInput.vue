@@ -5,17 +5,17 @@
         class="memo-item__title"
         contenteditable="true"
         placeholder="제목을 입력해주세요."
-        ref="addItemTitle"
+        ref="title"
         @input="updateTitle"
-      >{{title}}</div>
+      ></div>
     </div>
     <div
       class="memo-item__body"
       contenteditable="true"
       placeholder="메모내용을 입력해주세요."
-      ref="addItemText"
+      ref="text"
       @input="updateText"
-    >{{text}}</div>
+    ></div>
     <div class="memo-item__footer">
       <div class="memo-item__btns">
         <!-- add -->
@@ -28,32 +28,19 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { constants } from 'crypto'
+
 export default {
   data: () => {
-    return {}
+    return {
+      title: '',
+      text: ''
+    }
   },
 
   created() {},
 
   computed: {
-    ...mapState('memos', { id: 'idNext' }),
-    title: {
-      get() {
-        this.$refs.addItemTitle
-      },
-      set(st) {
-        this.$refs.addItemTitle.innerText = st
-      }
-    },
-    text: {
-      get() {
-        this.$refs.addItemText
-      },
-      set(st) {
-        this.$refs.addItemText.innerText = st
-      }
-    }
+    ...mapState('memos', { id: 'idNext' })
   },
 
   methods: {
@@ -65,6 +52,10 @@ export default {
       this.text = e.target.innerText
     },
     addMemo() {
+      if (this.title.length == 0 || this.text.length == 0) {
+        alert('제목과 내용을 입력해 주세요.')
+        return
+      }
       const data = {
         id: this.id,
         title: this.title,
@@ -73,8 +64,13 @@ export default {
         onFix: false
       }
       this.add(data)
+      this.reset()
+    },
+    reset() {
       this.title = ''
       this.text = ''
+      this.$refs.title.innerText = ''
+      this.$refs.text.innerText = ''
     }
   }
 }

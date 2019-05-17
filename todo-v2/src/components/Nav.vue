@@ -2,12 +2,7 @@
   <div class="nav-wrap">
     <h1>Hello~ Vue!!!</h1>
     <nav class="nav">
-      <router-link
-        @click.native="setToolName(nav.title)"
-        v-for="(nav, idx) in list"
-        :key="idx"
-        :to="nav.link"
-      >{{nav.title}}</router-link>
+      <router-link v-for="(nav, idx) in list" :key="idx" :to="nav.link">{{nav.title}}</router-link>
     </nav>
   </div>
 </template>
@@ -18,9 +13,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   props: ['list'],
   computed: {},
-  methods: {
-    ...mapMutations(['setToolName'])
-  }
+  methods: {}
 }
 </script>
 

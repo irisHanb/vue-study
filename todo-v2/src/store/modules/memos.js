@@ -37,7 +37,6 @@ const mutations = {
   // 편집중인 메모 설정
   changeEditMode(state, item) {
     item.onEdit = true
-    console.log(item.id, item.title, item.text)
     state.onEdit = true
     state.onEditItem = item
   },
@@ -66,7 +65,6 @@ const actions = {
   // create: add
   async add({ commit, dispatch }, data) {
     try {
-      console.log(data)
       await api.add(data)
       dispatch('getList')
     } catch (e) {
@@ -83,7 +81,6 @@ const actions = {
   },
   async update({ commit, dispatch }, item) {
     try {
-      console.log('update>>> ', item)
       await api.update(item)
       dispatch('getList')
     } catch (e) {
