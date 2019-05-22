@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue slot exercise</title>
+
+
+</head>
+
+<body>
+  <div id="app">
+    <!-- <h1>{{greeting}}</h1> -->
+    <comp>
+      <template v-slot:[slot]>
+        <h2>data slot 의 slot</h2>
+        <div>헤더 내용도 넣을 수 있따.</div>
+      </template>
+      <template v-slot:footer="{nameInfo}">
+        <h2>{{nameInfo.first}}</h2>
+        footer내용도 넣어본다.
+      </template>
+
+    </comp>
+  </div>
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.js"></script>
+
+  <script src="https://unpkg.com/vue"></script>
+  <script type="text/babel">
+    const CompA = {
+      data: function () {
+        return {
+          name: { first: 'han', last: 'b' }
+        }
+      },
+      template: `
+      <div>
+        <header>          
+          <h1>Header</h1>
+          <hr>
+          <slot name="header"></slot>                              
+        </header>
+        <footer>          
+          <h2>Footer</h2>
+          <hr>
+          <slot name="footer" :nameInfo="name"></slot>          
+        </footer>      
+      </div>
+      `
+    }
+
+
+    var app = new Vue({
+      el: '#app',
+      components: {
+        'comp': CompA
+      },
+
+      data: function () {
+        return {
+          greeting: 'hello',
+          slot: 'header'
+
+        }
+      }
+    })
+
+  </script>
+
+
+</body>
+
+</html>
